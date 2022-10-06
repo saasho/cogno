@@ -1,0 +1,17 @@
+{
+	"name": "AMETLSqlPoolTable",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AMETL",
+			"table": "ACCOUNT_MAPPING"
+		},
+		"sqlPool": {
+			"referenceName": "AdamDvorak",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

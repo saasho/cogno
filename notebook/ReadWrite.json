@@ -1,0 +1,409 @@
+{
+	"name": "ReadWrite",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "ca192f5d-46f1-481f-896d-2d62a6a33ef5"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"02859d04-4b05-49fa-bd25-9ca9a4cc13b4": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "Poster_Link",
+										"1": "Series_Title",
+										"2": "Released_Year",
+										"3": "Certificate",
+										"4": "Runtime",
+										"5": "Genre",
+										"6": "IMDB_Rating",
+										"7": "Overview",
+										"8": "Meta_score",
+										"9": "Director",
+										"10": "Star1",
+										"11": "Star2",
+										"12": "Star3",
+										"13": "Star4",
+										"14": "No_of_Votes",
+										"15": "Gross"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "The Shawshank Redemption",
+										"2": "1994",
+										"3": "A",
+										"4": "142 min",
+										"5": "Drama",
+										"6": "9.3",
+										"7": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+										"8": "80",
+										"9": "Frank Darabont",
+										"10": "Tim Robbins",
+										"11": "Morgan Freeman",
+										"12": "Bob Gunton",
+										"13": "William Sadler",
+										"14": "2343110",
+										"15": "28,341,469"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY98_CR1,0,67,98_AL_.jpg",
+										"1": "The Godfather",
+										"2": "1972",
+										"3": "A",
+										"4": "175 min",
+										"5": "Crime, Drama",
+										"6": "9.2",
+										"7": "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
+										"8": "100",
+										"9": "Francis Ford Coppola",
+										"10": "Marlon Brando",
+										"11": "Al Pacino",
+										"12": "James Caan",
+										"13": "Diane Keaton",
+										"14": "1620367",
+										"15": "134,966,411"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "The Dark Knight",
+										"2": "2008",
+										"3": "UA",
+										"4": "152 min",
+										"5": "Action, Crime, Drama",
+										"6": "9",
+										"7": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+										"8": "84",
+										"9": "Christopher Nolan",
+										"10": "Christian Bale",
+										"11": "Heath Ledger",
+										"12": "Aaron Eckhart",
+										"13": "Michael Caine",
+										"14": "2303232",
+										"15": "534,858,444"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY98_CR1,0,67,98_AL_.jpg",
+										"1": "The Godfather: Part II",
+										"2": "1974",
+										"3": "A",
+										"4": "202 min",
+										"5": "Crime, Drama",
+										"6": "9",
+										"7": "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.",
+										"8": "90",
+										"9": "Francis Ford Coppola",
+										"10": "Al Pacino",
+										"11": "Robert De Niro",
+										"12": "Robert Duvall",
+										"13": "Diane Keaton",
+										"14": "1129952",
+										"15": "57,300,000"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "12 Angry Men",
+										"2": "1957",
+										"3": "U",
+										"4": "96 min",
+										"5": "Crime, Drama",
+										"6": "9",
+										"7": "A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.",
+										"8": "96",
+										"9": "Sidney Lumet",
+										"10": "Henry Fonda",
+										"11": "Lee J. Cobb",
+										"12": "Martin Balsam",
+										"13": "John Fiedler",
+										"14": "689845",
+										"15": "4,360,000"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "The Lord of the Rings: The Return of the King",
+										"2": "2003",
+										"3": "U",
+										"4": "201 min",
+										"5": "Action, Adventure, Drama",
+										"6": "8.9",
+										"7": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+										"8": "94",
+										"9": "Peter Jackson",
+										"10": "Elijah Wood",
+										"11": "Viggo Mortensen",
+										"12": "Ian McKellen",
+										"13": "Orlando Bloom",
+										"14": "1642758",
+										"15": "377,845,905"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY98_CR0,0,67,98_AL_.jpg",
+										"1": "Pulp Fiction",
+										"2": "1994",
+										"3": "A",
+										"4": "154 min",
+										"5": "Crime, Drama",
+										"6": "8.9",
+										"7": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+										"8": "94",
+										"9": "Quentin Tarantino",
+										"10": "John Travolta",
+										"11": "Uma Thurman",
+										"12": "Samuel L. Jackson",
+										"13": "Bruce Willis",
+										"14": "1826188",
+										"15": "107,928,762"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BNDE4OTMxMTctNmRhYy00NWE2LTg3YzItYTk3M2UwOTU5Njg4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "Schindler's List",
+										"2": "1993",
+										"3": "A",
+										"4": "195 min",
+										"5": "Biography, Drama, History",
+										"6": "8.9",
+										"7": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+										"8": "94",
+										"9": "Steven Spielberg",
+										"10": "Liam Neeson",
+										"11": "Ralph Fiennes",
+										"12": "Ben Kingsley",
+										"13": "Caroline Goodall",
+										"14": "1213505",
+										"15": "96,898,818"
+									},
+									{
+										"0": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_UX67_CR0,0,67,98_AL_.jpg",
+										"1": "Inception",
+										"2": "2010",
+										"3": "UA",
+										"4": "148 min",
+										"5": "Action, Adventure, Sci-Fi",
+										"6": "8.8",
+										"7": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+										"8": "74",
+										"9": "Christopher Nolan",
+										"10": "Leonardo DiCaprio",
+										"11": "Joseph Gordon-Levitt",
+										"12": "Elliot Page",
+										"13": "Ken Watanabe",
+										"14": "2067042",
+										"15": "292,576,195"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "_c0",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "_c1",
+										"type": "string"
+									},
+									{
+										"key": "2",
+										"name": "_c2",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "_c3",
+										"type": "string"
+									},
+									{
+										"key": "4",
+										"name": "_c4",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "_c5",
+										"type": "string"
+									},
+									{
+										"key": "6",
+										"name": "_c6",
+										"type": "string"
+									},
+									{
+										"key": "7",
+										"name": "_c7",
+										"type": "string"
+									},
+									{
+										"key": "8",
+										"name": "_c8",
+										"type": "string"
+									},
+									{
+										"key": "9",
+										"name": "_c9",
+										"type": "string"
+									},
+									{
+										"key": "10",
+										"name": "_c10",
+										"type": "string"
+									},
+									{
+										"key": "11",
+										"name": "_c11",
+										"type": "string"
+									},
+									{
+										"key": "12",
+										"name": "_c12",
+										"type": "string"
+									},
+									{
+										"key": "13",
+										"name": "_c13",
+										"type": "string"
+									},
+									{
+										"key": "14",
+										"name": "_c14",
+										"type": "string"
+									},
+									{
+										"key": "15",
+										"name": "_c15",
+										"type": "string"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\n",
+					"df = spark.read.load('abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/dj_test/imdb_top_1000.csv', format='csv')\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"%%spark\n",
+					"val df = spark.read.csv(\"abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/dj_test/imdb_top_1000.csv\")\n",
+					"df.show(10)"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.coalesce(1).write.option(\"header\",\"true\").csv(\"abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/dj_test/temp_delete.csv\")"
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}

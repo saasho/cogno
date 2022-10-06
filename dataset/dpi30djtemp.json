@@ -1,0 +1,20 @@
+{
+	"name": "dpi30djtemp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pricing/dj_test/temp",
+				"fileSystem": "rz-container"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

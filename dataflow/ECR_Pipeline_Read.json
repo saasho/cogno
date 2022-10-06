@@ -1,0 +1,57 @@
+{
+	"name": "ECR_Pipeline_Read",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/ECR"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "RestServiceMonksTestss",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30djtemp",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     token as string,",
+				"     docId as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     format: 'rest',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     entity: (concat('api/v1/documents/',$docId)),",
+				"     headers: ['Authorization' -> (concat('Bearer ',$token)), 'Accept' -> 'application/json'],",
+				"     httpMethod: 'GET',",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'singleDocument']) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     truncate: true,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     format: 'parquet') ~> sink2"
+			]
+		}
+	}
+}

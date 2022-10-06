@@ -1,0 +1,17 @@
+{
+	"name": "imdb_predict",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "imdb_predict",
+			"table": "top1000_clean"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "supporttest",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "to support test",
+		"annotations": [],
+		"type": "Db2",
+		"typeProperties": {
+			"connectionString": "server=dpi30-test-eus-syn-01.sql.azuresynapse.net;database=dpi30testeusdsqlp01;authenticationtype=Basic;username=rajesh.singh111@kyndryl.onmicrosoft.com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxOGUyODhmMi04ZDY1LTRlYjgtYmVkYi0yYjQ4MzU1NGIwMGUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "DB2SHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

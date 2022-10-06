@@ -1,0 +1,25 @@
+{
+	"name": "kafka_test",
+	"properties": {
+		"Name": "kafka_test",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://dpi30testeusdlsafsrz01@dpi30testeusdlsarz01.dfs.core.windows.net/kafka_test",
+			"Properties": {
+				"FormatType": "parquet",
+				"LinkedServiceName": "dpi30-test-eus-syn-01-WorkspaceDefaultStorage"
+			}
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 3,
+		"ObjectId": "7faf0df1-d3ed-4cef-b3a4-a53164766e78"
+	},
+	"type": "DATABASE"
+}

@@ -1,0 +1,77 @@
+{
+	"name": "dpi30djSimpleDataflow",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/pipeline"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjuserdata",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjtargetjson",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CleanSalary"
+				},
+				{
+					"name": "SalaryGreaterthan10k"
+				},
+				{
+					"name": "AddAge"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          registration_dttm as timestamp,",
+				"          id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          gender as string,",
+				"          ip_address as string,",
+				"          cc as string,",
+				"          country as string,",
+				"          birthdate as string,",
+				"          salary as double,",
+				"          title as string,",
+				"          comments as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     limit: 10,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet',",
+				"     partitionBy('hash', 1)) ~> source1",
+				"source1 derive(salary = iifNull(salary, 0)) ~> CleanSalary",
+				"CleanSalary filter(salary>10000) ~> SalaryGreaterthan10k",
+				"SalaryGreaterthan10k derive(age = year(currentUTC())-year(toDate(birthdate,'MM/dd/yyyy'))) ~> AddAge",
+				"AddAge sort(desc(salary, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

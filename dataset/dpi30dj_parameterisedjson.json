@@ -1,0 +1,29 @@
+{
+	"name": "dpi30dj_parameterisedjson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filepath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filepath",
+					"type": "Expression"
+				},
+				"folderPath": "Pricing/dj_test",
+				"fileSystem": "rz-container"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

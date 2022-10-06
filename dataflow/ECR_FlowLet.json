@@ -1,0 +1,106 @@
+{
+	"name": "ECR_FlowLet",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/ECR"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "RestServiceMonksTestss",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureDataLakeStorageDatamonksTest",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30dj_121618_2_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "compose1",
+					"flowlet": {
+						"referenceName": "ECR_Auth_flowlet",
+						"type": "DataFlowReference",
+						"parameters": {
+							"jwtToken": "\"8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae\""
+						}
+					}
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     format: 'rest',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     entity: 'api/v1/documents/61730a4e5037b730896bbd7a',",
+				"     headers: ['Authorization' -> (concat('Bearer ',sink1#outputs()[1].body)), 'Accept' -> 'application/json'],",
+				"     httpMethod: 'GET',",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'singleDocument']) ~> source1",
+				"compose(mapParameter(",
+				"          jwtToken = \"8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae\"",
+				"     ),",
+				"     composition: 'ECR_Auth_flowlet') ~> compose1@(output1)",
+				"source1 filter(1==2) ~> filter1",
+				"compose1@output1 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          body",
+				"     )) ~> sink1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as string,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2) ~> sink2"
+			]
+		}
+	}
+}

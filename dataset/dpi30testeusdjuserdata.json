@@ -1,0 +1,25 @@
+{
+	"name": "dpi30testeusdjuserdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "userdata2.parquet",
+				"folderPath": "Pricing/dj_test",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

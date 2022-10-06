@@ -1,0 +1,34 @@
+{
+	"name": "dpi30djfact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dpi30testeusdj/dimensionmodel"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "fact.parquet",
+				"folderPath": "Pricing/dj_test/factandDim",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "FKEY",
+				"type": "INT32"
+			},
+			{
+				"name": "TXAMNT",
+				"type": "INT32"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

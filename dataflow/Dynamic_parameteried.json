@@ -1,0 +1,74 @@
+{
+	"name": "Dynamic_parameteried",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30dj_parametized_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "assert1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as double,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(count = count(Genre)) ~> aggregate1",
+				"aggregate1 assert(expectTrue(count == 1000, false, 'assert1', count ==1000)) ~> assert1",
+				"assert1 filter(count == 1000) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

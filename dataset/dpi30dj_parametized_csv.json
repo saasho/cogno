@@ -1,0 +1,44 @@
+{
+	"name": "dpi30dj_parametized_csv",
+	"properties": {
+		"description": "\"Folder/file.txt\"",
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filepath": {
+				"type": "string"
+			},
+			"parentfolder": {
+				"type": "string",
+				"defaultValue": "dj_test"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filepath",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('Pricing/',dataset().parentfolder)",
+					"type": "Expression"
+				},
+				"fileSystem": "rz-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,172 @@
+{
+	"name": "ECRparser",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/python"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "7f29c5e0-1e8f-4457-b352-eba826e36efd"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"tags": [
+						"parameters"
+					]
+				},
+				"source": [
+					"response,id=\"\",\"\""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"print(response)"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import json\n",
+					"j=json.loads(response.replace('\\\\',''))"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"d={\n",
+					"    \"id\":id,\n",
+					"    \"registration_number\": j[\"registration_number\"],\n",
+					"    \"cmr_gbg\": j[\"cmr_gbg\"],\n",
+					"    \"cmr_number\": j[\"cmr_number\"],\n",
+					"    \"customer_name\": j[\"customer_name\"],\n",
+					"    \"customer_sensitive\": j[\"customer_sensitive\"],\n",
+					"    \"category\": j[\"category\"],\n",
+					"    \"type_name\": j[\"type_name\"],\n",
+					"    \"iso_country_code\": j[\"iso_country_code\"],\n",
+					"    \"country_name\": j[\"country_name\"],\n",
+					"    \"language_code\": j[\"language_code\"],\n",
+					"    \"language_name\": j[\"language_name\"]\n",
+					"}"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"print(\"Formated json {}\".format(d))"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"mssparkutils.notebook.exit(str(d))"
+				]
+			}
+		]
+	}
+}

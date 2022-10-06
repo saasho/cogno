@@ -1,0 +1,706 @@
+{
+	"name": "datamonkstestss_populationcsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Population.csv",
+				"folderPath": "Pricing/datamonks-test-ss",
+				"fileSystem": "rz-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Afghanistan",
+				"type": "String"
+			},
+			{
+				"name": "Angola",
+				"type": "String"
+			},
+			{
+				"name": "Albania",
+				"type": "String"
+			},
+			{
+				"name": "United Arab Emirates",
+				"type": "String"
+			},
+			{
+				"name": "Argentina",
+				"type": "String"
+			},
+			{
+				"name": "Armenia",
+				"type": "String"
+			},
+			{
+				"name": "Australia",
+				"type": "String"
+			},
+			{
+				"name": "Austria",
+				"type": "String"
+			},
+			{
+				"name": "Azerbaijan",
+				"type": "String"
+			},
+			{
+				"name": "Burundi",
+				"type": "String"
+			},
+			{
+				"name": "Belgium",
+				"type": "String"
+			},
+			{
+				"name": "Benin",
+				"type": "String"
+			},
+			{
+				"name": "Burkina Faso",
+				"type": "String"
+			},
+			{
+				"name": "Bangladesh",
+				"type": "String"
+			},
+			{
+				"name": "Bulgaria",
+				"type": "String"
+			},
+			{
+				"name": "Bahrain",
+				"type": "String"
+			},
+			{
+				"name": "Bosnia and Herzegovina",
+				"type": "String"
+			},
+			{
+				"name": "Belarus",
+				"type": "String"
+			},
+			{
+				"name": "Bolivia (Plurinational State of)",
+				"type": "String"
+			},
+			{
+				"name": "Brazil",
+				"type": "String"
+			},
+			{
+				"name": "Barbados",
+				"type": "String"
+			},
+			{
+				"name": "Botswana",
+				"type": "String"
+			},
+			{
+				"name": "Central African Republic",
+				"type": "String"
+			},
+			{
+				"name": "Canada",
+				"type": "String"
+			},
+			{
+				"name": "Switzerland",
+				"type": "String"
+			},
+			{
+				"name": "Chile",
+				"type": "String"
+			},
+			{
+				"name": "China",
+				"type": "String"
+			},
+			{
+				"name": "Côte d'Ivoire",
+				"type": "String"
+			},
+			{
+				"name": "Cameroon",
+				"type": "String"
+			},
+			{
+				"name": "D.R. of the Congo",
+				"type": "String"
+			},
+			{
+				"name": "Congo",
+				"type": "String"
+			},
+			{
+				"name": "Colombia",
+				"type": "String"
+			},
+			{
+				"name": "Comoros",
+				"type": "String"
+			},
+			{
+				"name": "Cabo Verde",
+				"type": "String"
+			},
+			{
+				"name": "Costa Rica",
+				"type": "String"
+			},
+			{
+				"name": "Czechoslovakia",
+				"type": "String"
+			},
+			{
+				"name": "Cuba",
+				"type": "String"
+			},
+			{
+				"name": "Cyprus",
+				"type": "String"
+			},
+			{
+				"name": "Czech Republic",
+				"type": "String"
+			},
+			{
+				"name": "Germany",
+				"type": "String"
+			},
+			{
+				"name": "Djibouti",
+				"type": "String"
+			},
+			{
+				"name": "Dominica",
+				"type": "String"
+			},
+			{
+				"name": "Denmark",
+				"type": "String"
+			},
+			{
+				"name": "Dominican Republic",
+				"type": "String"
+			},
+			{
+				"name": "Algeria",
+				"type": "String"
+			},
+			{
+				"name": "Ecuador",
+				"type": "String"
+			},
+			{
+				"name": "Egypt",
+				"type": "String"
+			},
+			{
+				"name": "Spain",
+				"type": "String"
+			},
+			{
+				"name": "Estonia",
+				"type": "String"
+			},
+			{
+				"name": "Ethiopia",
+				"type": "String"
+			},
+			{
+				"name": "Finland",
+				"type": "String"
+			},
+			{
+				"name": "France",
+				"type": "String"
+			},
+			{
+				"name": "Gabon",
+				"type": "String"
+			},
+			{
+				"name": "United Kingdom",
+				"type": "String"
+			},
+			{
+				"name": "Georgia",
+				"type": "String"
+			},
+			{
+				"name": "Ghana",
+				"type": "String"
+			},
+			{
+				"name": "Guinea",
+				"type": "String"
+			},
+			{
+				"name": "Gambia",
+				"type": "String"
+			},
+			{
+				"name": "Guinea-Bissau",
+				"type": "String"
+			},
+			{
+				"name": "Equatorial Guinea",
+				"type": "String"
+			},
+			{
+				"name": "Greece",
+				"type": "String"
+			},
+			{
+				"name": "Guatemala",
+				"type": "String"
+			},
+			{
+				"name": "China, Hong Kong SAR",
+				"type": "String"
+			},
+			{
+				"name": "Honduras",
+				"type": "String"
+			},
+			{
+				"name": "Croatia",
+				"type": "String"
+			},
+			{
+				"name": "Haiti",
+				"type": "String"
+			},
+			{
+				"name": "Hungary",
+				"type": "String"
+			},
+			{
+				"name": "Indonesia",
+				"type": "String"
+			},
+			{
+				"name": "India",
+				"type": "String"
+			},
+			{
+				"name": "Ireland",
+				"type": "String"
+			},
+			{
+				"name": "Iran (Islamic Republic of)",
+				"type": "String"
+			},
+			{
+				"name": "Iraq",
+				"type": "String"
+			},
+			{
+				"name": "Iceland",
+				"type": "String"
+			},
+			{
+				"name": "Israel",
+				"type": "String"
+			},
+			{
+				"name": "Italy",
+				"type": "String"
+			},
+			{
+				"name": "Jamaica",
+				"type": "String"
+			},
+			{
+				"name": "Jordan",
+				"type": "String"
+			},
+			{
+				"name": "Japan",
+				"type": "String"
+			},
+			{
+				"name": "Kazakhstan",
+				"type": "String"
+			},
+			{
+				"name": "Kenya",
+				"type": "String"
+			},
+			{
+				"name": "Kyrgyzstan",
+				"type": "String"
+			},
+			{
+				"name": "Cambodia",
+				"type": "String"
+			},
+			{
+				"name": "Republic of Korea",
+				"type": "String"
+			},
+			{
+				"name": "Kuwait",
+				"type": "String"
+			},
+			{
+				"name": "Lao People's DR",
+				"type": "String"
+			},
+			{
+				"name": "Lebanon",
+				"type": "String"
+			},
+			{
+				"name": "Liberia",
+				"type": "String"
+			},
+			{
+				"name": "Libya",
+				"type": "String"
+			},
+			{
+				"name": "Saint Lucia",
+				"type": "String"
+			},
+			{
+				"name": "Sri Lanka",
+				"type": "String"
+			},
+			{
+				"name": "Lesotho",
+				"type": "String"
+			},
+			{
+				"name": "Lithuania",
+				"type": "String"
+			},
+			{
+				"name": "Luxembourg",
+				"type": "String"
+			},
+			{
+				"name": "Latvia",
+				"type": "String"
+			},
+			{
+				"name": "Morocco",
+				"type": "String"
+			},
+			{
+				"name": "Republic of Moldova",
+				"type": "String"
+			},
+			{
+				"name": "Madagascar",
+				"type": "String"
+			},
+			{
+				"name": "Mexico",
+				"type": "String"
+			},
+			{
+				"name": "TFYR of Macedonia",
+				"type": "String"
+			},
+			{
+				"name": "Mali",
+				"type": "String"
+			},
+			{
+				"name": "Malta",
+				"type": "String"
+			},
+			{
+				"name": "Myanmar",
+				"type": "String"
+			},
+			{
+				"name": "Montenegro",
+				"type": "String"
+			},
+			{
+				"name": "Mongolia",
+				"type": "String"
+			},
+			{
+				"name": "Mozambique",
+				"type": "String"
+			},
+			{
+				"name": "Mauritania",
+				"type": "String"
+			},
+			{
+				"name": "Mauritius",
+				"type": "String"
+			},
+			{
+				"name": "Malawi",
+				"type": "String"
+			},
+			{
+				"name": "Malaysia",
+				"type": "String"
+			},
+			{
+				"name": "Namibia",
+				"type": "String"
+			},
+			{
+				"name": "Niger",
+				"type": "String"
+			},
+			{
+				"name": "Nigeria",
+				"type": "String"
+			},
+			{
+				"name": "Nicaragua",
+				"type": "String"
+			},
+			{
+				"name": "Netherlands",
+				"type": "String"
+			},
+			{
+				"name": "Norway",
+				"type": "String"
+			},
+			{
+				"name": "Nepal",
+				"type": "String"
+			},
+			{
+				"name": "New Zealand",
+				"type": "String"
+			},
+			{
+				"name": "Oman",
+				"type": "String"
+			},
+			{
+				"name": "Pakistan",
+				"type": "String"
+			},
+			{
+				"name": "Panama",
+				"type": "String"
+			},
+			{
+				"name": "Peru",
+				"type": "String"
+			},
+			{
+				"name": "Philippines",
+				"type": "String"
+			},
+			{
+				"name": "Poland",
+				"type": "String"
+			},
+			{
+				"name": "Puerto Rico",
+				"type": "String"
+			},
+			{
+				"name": "D.P.R. of Korea",
+				"type": "String"
+			},
+			{
+				"name": "Portugal",
+				"type": "String"
+			},
+			{
+				"name": "Paraguay",
+				"type": "String"
+			},
+			{
+				"name": "State of Palestine",
+				"type": "String"
+			},
+			{
+				"name": "Qatar",
+				"type": "String"
+			},
+			{
+				"name": "Romania",
+				"type": "String"
+			},
+			{
+				"name": "Russian Federation",
+				"type": "String"
+			},
+			{
+				"name": "Rwanda",
+				"type": "String"
+			},
+			{
+				"name": "Saudi Arabia",
+				"type": "String"
+			},
+			{
+				"name": "Sudan (Former)",
+				"type": "String"
+			},
+			{
+				"name": "Senegal",
+				"type": "String"
+			},
+			{
+				"name": "Singapore",
+				"type": "String"
+			},
+			{
+				"name": "Sierra Leone",
+				"type": "String"
+			},
+			{
+				"name": "El Salvador",
+				"type": "String"
+			},
+			{
+				"name": "Serbia",
+				"type": "String"
+			},
+			{
+				"name": "Sao Tome and Principe",
+				"type": "String"
+			},
+			{
+				"name": "Former USSR",
+				"type": "String"
+			},
+			{
+				"name": "Slovakia",
+				"type": "String"
+			},
+			{
+				"name": "Slovenia",
+				"type": "String"
+			},
+			{
+				"name": "Sweden",
+				"type": "String"
+			},
+			{
+				"name": "Swaziland",
+				"type": "String"
+			},
+			{
+				"name": "Seychelles",
+				"type": "String"
+			},
+			{
+				"name": "Syrian Arab Republic",
+				"type": "String"
+			},
+			{
+				"name": "Chad",
+				"type": "String"
+			},
+			{
+				"name": "Togo",
+				"type": "String"
+			},
+			{
+				"name": "Thailand",
+				"type": "String"
+			},
+			{
+				"name": "Tajikistan",
+				"type": "String"
+			},
+			{
+				"name": "Turkmenistan",
+				"type": "String"
+			},
+			{
+				"name": "Trinidad and Tobago",
+				"type": "String"
+			},
+			{
+				"name": "Tunisia",
+				"type": "String"
+			},
+			{
+				"name": "Turkey",
+				"type": "String"
+			},
+			{
+				"name": "Taiwan, Province of China",
+				"type": "String"
+			},
+			{
+				"name": "U.R. of Tanzania: Mainland",
+				"type": "String"
+			},
+			{
+				"name": "Uganda",
+				"type": "String"
+			},
+			{
+				"name": "Ukraine",
+				"type": "String"
+			},
+			{
+				"name": "Uruguay",
+				"type": "String"
+			},
+			{
+				"name": "United States",
+				"type": "String"
+			},
+			{
+				"name": "Uzbekistan",
+				"type": "String"
+			},
+			{
+				"name": "Venezuela (Bolivarian Republic of)",
+				"type": "String"
+			},
+			{
+				"name": "Viet Nam",
+				"type": "String"
+			},
+			{
+				"name": "Yemen",
+				"type": "String"
+			},
+			{
+				"name": "Former Yugoslavia",
+				"type": "String"
+			},
+			{
+				"name": "South Africa",
+				"type": "String"
+			},
+			{
+				"name": "Zambia",
+				"type": "String"
+			},
+			{
+				"name": "Zimbabwe",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

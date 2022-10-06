@@ -1,0 +1,70 @@
+{
+	"name": "DIM_SOURCE_APPLICATION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pricing/datamonks-test-ss/iz/DIM_SOURCE_APPLICATION",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "SURROGATE_KEY",
+				"type": "INT64"
+			},
+			{
+				"name": "SOURCE_APPLICATION_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "SOURCE_APPLICATION_CODE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SOURCE_APPLICATION_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "SOURCE_OWNER_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "EFFECTIVE_DATE",
+				"type": "DATE"
+			},
+			{
+				"name": "REVISION",
+				"type": "INT32"
+			},
+			{
+				"name": "IS_DELETED",
+				"type": "BOOLEAN"
+			},
+			{
+				"name": "IS_LAD",
+				"type": "BOOLEAN"
+			},
+			{
+				"name": "LAD_SOURCE_OBJECT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LAD_SOURCE_OWNER",
+				"type": "UTF8"
+			},
+			{
+				"name": "AUDIT_TIMESTAMP",
+				"type": "INT96"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

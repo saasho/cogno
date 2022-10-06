@@ -1,0 +1,32 @@
+{
+	"name": "AccountMapping",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawZone_DataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "account_mapping.csv",
+				"folderPath": "Asset-Management",
+				"fileSystem": "rz-container"
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "\"",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

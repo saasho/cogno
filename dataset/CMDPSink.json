@@ -1,0 +1,21 @@
+{
+	"name": "CMDPSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawZone_DataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "registration.parquet",
+				"fileSystem": "kafka-test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

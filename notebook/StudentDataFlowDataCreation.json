@@ -1,0 +1,169 @@
+{
+	"name": "StudentDataFlowDataCreation",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/pipeline/StudentExamHall"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 1,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "true",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "4",
+				"spark.autotune.trackingId": "c0769927-373a-4f8a-8e41-61c20b368578"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"source": [
+					"## Write data to the default ADLS Gen2 storage\n",
+					"\n",
+					"We are going to write the spark dateframe to your default ADLS Gen2 storage account.\n",
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"%%configure -f\n",
+					"{\n",
+					"    //https://github.com/cloudera/livy#request-body.\n",
+					"    \"driverMemory\":\"28g\", // Recommended values: [\"28g\", \"56g\", \"112g\", \"224g\", \"400g\", \"472g\"]\n",
+					"    \"driverCores\":4, // Recommended values: [4, 8, 16, 32, 64, 80]\n",
+					"    \"executorMemory\":\"28g\",\n",
+					"    \"executorCores\":4, \n",
+					"    // \"jars\":[\"abfs[s]://<file_system>@<account_name>.dfs.core.windows.net/<path>/myjar.jar\",\"wasb[s]://<containername>@<accountname>.blob.core.windows.net/<path>/myjar1.jar\"],\n",
+					"    \"conf\":{\n",
+					"    //Example of standard spark property, to find more available properties please visit:https://spark.apache.org/docs/latest/configuration.html#application-properties.\n",
+					"        \"spark.driver.maxResultSize\":\"10g\",\n",
+					"    //Example of customized property, you can specify count of lines that Spark SQL returns by configuring \"livy.rsc.sql.num-rows\".\n",
+					"        \"livy.rsc.sql.num-rows\":\"100\" \n",
+					"    }\n",
+					"}"
+				],
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"val students= (1 to 10).zip(('A' until 'I').map(_.toString)).toList.map(i=>(i._1,i._2,i._1%3)).toDF(\"id\",\"Name\",\"ExamHallNumber\")\n",
+					"val examhall=Seq((0,\"hall0\"),(1,\"hall1\"),(2,\"hall2\")).toDF(\"HallNumber\",\"HallName\")"
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"// set your storage account connection\n",
+					"\n",
+					"\n",
+					"val account_name = \"dpi30testeusdlsarz01\" // replace with your blob name\n",
+					"val container_name = \"rz-container\" //replace with your container name\n",
+					"val relative_path = \"Pricing/dj_test/Student/\" //replace with your relative folder path\n",
+					"val hol_blob_sas_token = \n",
+					"\"sp=r&st=2022-05-23T11:01:25Z&se=2022-05-23T19:01:25Z&spr=https&sv=2020-08-04&sr=d&sig=gRJgoIGTGPvrRWG2RMOIQhh0DFdXRKpy0Xir%2BFtMERQ%3D&sdd=2\"\n",
+					"spark.conf.set(f\"fs.azure.sas.$container_name.$account_name.blob.core.windows.net\",hol_blob_sas_token)\n",
+					"\n",
+					"\n",
+					"// val adls_path = f\"wasbs://$container_name@$account_name.blob.core.windows.net/$relative_path\"\n",
+					"val adls_path = f\"abfss://$container_name@$account_name.dfs.core.windows.net/$relative_path\""
+				],
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"\n",
+					"val studentpath = adls_path + \"students.parquet\"\n",
+					"val exampath = adls_path + \"examhall.csv\"\n",
+					"// val csv_path = adls_path + \"holiday.csv\""
+				],
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"import org.apache.spark.sql.SaveMode\n",
+					"\n",
+					"students.coalesce(1).write.mode(SaveMode.Overwrite).option(\"header\", \"true\").parquet(studentpath)\n",
+					"examhall.coalesce(1).write.mode(SaveMode.Overwrite).option(\"header\", \"true\").csv(exampath)\n",
+					""
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"// val df_parquet = spark.read.option(\"header\", \"true\").parquet(parquet_path)\n",
+					"// val df_json = spark.read.option(\"header\", \"true\")json(json_path)"
+				],
+				"execution_count": 16
+			}
+		]
+	}
+}

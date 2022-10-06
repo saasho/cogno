@@ -1,0 +1,491 @@
+{
+	"name": "121684",
+	"properties": {
+		"folder": {
+			"name": "MockSprint"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "sparkgpu",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "30g",
+			"driverCores": 4,
+			"executorMemory": "60g",
+			"executorCores": 12,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "5da9a525-ffa5-483c-a3a3-269bba12bd30"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/sparkgpu",
+				"name": "sparkgpu",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkgpu",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 16,
+				"memory": 110,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"Implementation of movie-recommender system by Taras Kaminsky\n",
+					"\n",
+					"With huge help from Rounak Banik's Movie Recommender Systems notebook, [found here](https://www.kaggle.com/code/rounakbanik/movie-recommender-systems/notebook)."
+				]
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"Import pandas, numpy, and sklearn (single-node ML library for \"classical ML algorithms\")."
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"import pandas as pd\n",
+					"import numpy as np\n",
+					"from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer\n",
+					"from sklearn.metrics.pairwise import linear_kernel, cosine_similarity"
+				],
+				"execution_count": 18
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"Import imdb csv from blob storage. This snippet was provided from microsoft by typing `snippet` and choosing an auto-filled option.\n",
+					"Imports as a Spark Dataframe, but I converted it to Pandas in this example."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql import SparkSession \n",
+					"from pyspark.sql.types import * \n",
+					"\n",
+					"# Primary storage info \n",
+					"account_name = 'dpi30testeusdlsarz01' # fill in your primary account name \n",
+					"container_name = 'rz-container' # fill in your container name \n",
+					"relative_path = 'Pricing/' # fill in your relative folder path \n",
+					"adls_path = 'abfss://%s@%s.dfs.core.windows.net/%s' % (container_name, account_name, relative_path) \n",
+					"print('Primary storage account path: ' + adls_path) \n",
+					"\n",
+					"# Read a csv file \n",
+					"csv_path = adls_path + 'imdb_top_1000.csv' \n",
+					"df_csv = spark.read.csv(csv_path, header = 'true')\n",
+					"df_csv = df_csv.toPandas()"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"Get number of votes and IMDB rating for future calculations."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_csv['IMDB_Rating'] = pd.to_numeric(df_csv[\"IMDB_Rating\"])\n",
+					"df_csv['No_of_Votes'] = pd.to_numeric(df_csv[\"No_of_Votes\"])\n",
+					"vote_ct = df_csv[\"No_of_Votes\"]\n",
+					"vote_avg = df_csv[\"IMDB_Rating\"]\n",
+					"print(vote_avg)\n",
+					"avg_score = vote_avg.mean()"
+				],
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"avg_score\n",
+					"vote_ct_threshold = vote_ct.quantile(0.85)\n",
+					"vote_ct_threshold"
+				],
+				"execution_count": 21
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"top_movies = df_csv[df_csv['No_of_Votes'] >= vote_ct_threshold][['Series_Title', 'Released_Year', 'Genre', 'IMDB_Rating', 'Overview', 'Director', 'Star1','Star2','Star3','Star4','No_of_Votes']]\n",
+					"top_movies"
+				],
+				"execution_count": 54
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"Adjust rankings by applying weight depending on vote count."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def weighted_rating(x):\n",
+					"    v = x['No_of_Votes']\n",
+					"    R = x['IMDB_Rating']\n",
+					"    return (v/(v+vote_ct_threshold)*R) + (vote_ct_threshold/(vote_ct_threshold+v)*avg_score)"
+				],
+				"execution_count": 23
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"top_movies['weighted_rating'] = top_movies.apply(weighted_rating, axis=1)\n",
+					"top_movies = top_movies.sort_values('weighted_rating', ascending=False)"
+				],
+				"execution_count": 55
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"top_movies"
+				],
+				"execution_count": 56
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Top movies in each genre"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"by_genre = top_movies.apply(lambda x: pd.Series(x['Genre'].split(\", \")),axis=1).stack().reset_index(level=1, drop=True)\n",
+					"by_genre\n",
+					"by_genre.name = 'Genre'\n",
+					"top_movies_genres = top_movies.drop('Genre',axis=1).join(by_genre)"
+				],
+				"execution_count": 57
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"top_movies_genres"
+				],
+				"execution_count": 58
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def build_chart(genre, percentile=0.85):\n",
+					"    df = top_movies_genres[top_movies_genres['Genre'] == genre]\n",
+					"    vote_counts = df['No_of_Votes']\n",
+					"    vote_averages = df['IMDB_Rating']\n",
+					"    C = vote_averages.mean()\n",
+					"    m = vote_counts.quantile(percentile)\n",
+					"\n",
+					"\n",
+					"    df\n",
+					"\n",
+					"\n",
+					"    qualified = df[df['No_of_Votes'] >= m][['Series_Title', 'Released_Year', 'No_of_Votes', 'IMDB_Rating']]\n",
+					"    qualified['No_of_Votes'] = qualified['No_of_Votes'].astype('int')\n",
+					"    qualified['IMDB_Rating'] = qualified['IMDB_Rating'].astype('float')\n",
+					"    \n",
+					"    qualified['Weighted_avg'] = qualified.apply(lambda x: (x['No_of_Votes']/(x['No_of_Votes']+m) * x['IMDB_Rating']) + (m/(m+x['IMDB_Rating']) * C), axis=1)\n",
+					"    qualified = qualified.sort_values('Weighted_avg', ascending=False).head(250)\n",
+					"    \n",
+					"    return qualified"
+				],
+				"execution_count": 59
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"build_chart('Romance')"
+				],
+				"execution_count": 60
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Recommendation based on description"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 2), min_df=0, stop_words='english')\n",
+					"tfidf_matrix = tf.fit_transform(top_movies['Overview'])"
+				],
+				"execution_count": 61
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)\n",
+					"top_movies = top_movies.reset_index()\n",
+					"titles = top_movies['Series_Title']\n",
+					"indices = pd.Series(top_movies.index, index=top_movies['Series_Title'])"
+				],
+				"execution_count": 64
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def get_recommendations(title):\n",
+					"    idx = indices[title]\n",
+					"    sim_scores = list(enumerate(cosine_sim[idx]))\n",
+					"    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)\n",
+					"    sim_scores = sim_scores[1:31]\n",
+					"    movie_indices = [i[0] for i in sim_scores]\n",
+					"    return titles.iloc[movie_indices]"
+				],
+				"execution_count": 67
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"get_recommendations('The Dark Knight Rises')"
+				],
+				"execution_count": 70
+			}
+		]
+	}
+}

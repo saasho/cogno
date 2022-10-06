@@ -1,0 +1,75 @@
+{
+	"name": "AppendPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "MetaData",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"structure"
+					]
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.structure",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "testarray",
+								"value": {
+									"value": "@{item().name}",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"testarray": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-20T09:33:36Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

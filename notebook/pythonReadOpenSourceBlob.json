@@ -1,0 +1,104 @@
+{
+	"name": "pythonReadOpenSourceBlob",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/python/SampleDataset"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 1,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "true",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "4",
+				"spark.autotune.trackingId": "f6de7c21-cf42-4263-b362-91b403bbda5f"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\n",
+					"blob_account_name = \"pandemicdatalake\"\n",
+					"blob_container_name = \"public\"\n",
+					"blob_relative_path = \"curated/covid-19/bing_covid-19_data/latest/bing_covid-19_data.parquet\"\n",
+					"blob_sas_token = r\"\"\n",
+					"# Allow SPARK to read from Blob remotely\n",
+					"wasbs_path = 'wasbs://%s@%s.blob.core.windows.net/%s' % (blob_container_name, blob_account_name, blob_relative_path)\n",
+					"\n",
+					"\n",
+					"\n",
+					"spark.conf.set(\n",
+					"    'fs.azure.sas.%s.%s.blob.core.windows.net' % (blob_container_name, blob_account_name),\n",
+					"    blob_sas_token)\n",
+					"df = spark.read.parquet(wasbs_path)\n",
+					"display(df.limit(10))"
+				]
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"```\n",
+					"spark.conf.set(\"fs.azure.sas.container_name.acc_name.blob.core.windows.net\",\"\")\n",
+					"\n",
+					"spark.read.parquet(\"wasb://container_name@acc_name.blob.core.windows.net/path\")\n",
+					"```\n",
+					""
+				]
+			}
+		]
+	}
+}

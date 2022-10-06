@@ -1,0 +1,43 @@
+{
+	"name": "SynapseHyperwaveEXTLaunch",
+	"properties": {
+		"activities": [
+			{
+				"name": "SynapseDDLLaunchHyperwave",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "SynapseDDLLaunchHyperwave",
+						"type": "NotebookReference"
+					},
+					"snapshot": true,
+					"sparkPool": {
+						"referenceName": "ETLChapterSPool",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"folder": {
+			"name": "Adam"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-09T21:18:00Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

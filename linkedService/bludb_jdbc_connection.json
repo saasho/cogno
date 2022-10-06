@@ -1,0 +1,16 @@
+{
+	"name": "bludb_jdbc_connection",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Db2",
+		"typeProperties": {
+			"connectionString": "server=db2w-vcfjgjg.us-south.db2w.cloud.ibm.com:50001;database=bludb;authenticationtype=Basic;username=bluadmin",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxOWJjY2U1Zi05MGVhLTQzMjAtODA4Ni0xYWE1NGU5NTY4OGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "DB2SHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

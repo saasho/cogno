@@ -1,0 +1,207 @@
+{
+	"name": "ECRBasic",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://eci-staging.us-south.containers.appdomain.cloud/auth/authenticate",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-Type": "text/plain"
+					},
+					"body": "8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae"
+				}
+			},
+			{
+				"name": "token",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GetToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "token",
+					"value": {
+						"value": "@activity('GetToken').output.Response",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "DocumentJson",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://eci-staging.us-south.containers.appdomain.cloud/api/v1/documents/61730a4e5037b730896bbd7a",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "GET",
+					"headers": {
+						"Content-Type": "text/plain",
+						"Authorization": {
+							"value": "Bearer @{variables('token')}",
+							"type": "Expression"
+						}
+					},
+					"body": "password_here"
+				}
+			},
+			{
+				"name": "getMetaData",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DocumentJson",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "response",
+					"value": {
+						"value": "@{activity('DocumentJson').output._source.metadata}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ECR Parser",
+				"type": "SynapseNotebook",
+				"dependsOn": [
+					{
+						"activity": "getMetaData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "getID",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "ECRparser",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"response": {
+							"value": {
+								"value": "@variables('response')",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"id": {
+							"value": {
+								"value": "@variables('id')",
+								"type": "Expression"
+							},
+							"type": "string"
+						}
+					},
+					"snapshot": true,
+					"sparkPool": {
+						"referenceName": "testspark",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			},
+			{
+				"name": "getID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DocumentJson",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "id",
+					"value": {
+						"value": "@{activity('DocumentJson').output._id}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"token": {
+				"type": "String"
+			},
+			"response": {
+				"type": "String"
+			},
+			"cmr": {
+				"type": "String"
+			},
+			"id": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj/ECR"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-19T05:32:25Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

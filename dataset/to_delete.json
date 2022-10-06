@@ -1,0 +1,13 @@
+{
+	"name": "to_delete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Connection to catalyst",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

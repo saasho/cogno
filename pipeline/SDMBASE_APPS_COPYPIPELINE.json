@@ -1,0 +1,206 @@
+{
+	"name": "SDMBASE_APPS_COPYPIPELINE",
+	"properties": {
+		"description": "Copy pipeline for sdmbase apps parquet to SQL pool",
+		"activities": [
+			{
+				"name": "Copy_c9n",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rz-container/Pricing/datamonks-test-ss/lz/ods-db2_SDMBASE_APPS/sdmbaseapps.snappy.parquet"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.SDMBASE_APPS"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "APPLICATION_ID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "APPLICATION_ID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "APPLICATION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "APPLICATION_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APPLICATION_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "APPLICATION_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APPLICATION_SYSTEM_ID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "APPLICATION_SYSTEM_ID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "UPDATE_TS",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "UPDATE_TS",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATE_TS",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CREATE_TS",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ROW_STATUS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ROW_STATUS_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APP_DEALFOLDER_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "APP_DEALFOLDER_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APP_DEALFOLDER_NM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "APP_DEALFOLDER_NM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONFIG_STATUS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CONFIG_STATUS_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONFIG_STATUS_TS",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CONFIG_STATUS_TS",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "LOCKED_BY_USER_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOCKED_BY_USER_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATE_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CREATE_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UPDATE_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UPDATE_ID",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_c9n",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_c9n",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-05-26T07:20:08Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

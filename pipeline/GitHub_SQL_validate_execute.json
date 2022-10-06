@@ -1,0 +1,108 @@
+{
+	"name": "GitHub_SQL_validate_execute",
+	"properties": {
+		"activities": [
+			{
+				"name": "VALIDATE_SQL",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": "HttpTableExtractor",
+					"method": "POST",
+					"body": {
+						"value": "@json(concat('{\"action\": \"validate_sql\", \"return_sql\": \"true\", \"github_url\": \"', pipeline().parameters.github_url, '\"}'))",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "table_extractor_func",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "EXECUTE_SQL_OR_FAIL",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "VALIDATE_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@bool(activity('VALIDATE_SQL').output.sql_ready_for_execution)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "FAIL",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": {
+									"value": "@activity('VALIDATE_SQL').output.error_details",
+									"type": "Expression"
+								},
+								"errorCode": "-1"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "EXECUTE_SQL",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "AdamDvorakDB",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@activity('VALIDATE_SQL').output.sql",
+											"type": "Expression"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"github_url": {
+				"type": "String",
+				"defaultValue": "https://github.kyndryl.net/ETL-CHAPTER/AZURE_SYNAPSE/blob/MS_test_queries_for_synapse/test_queries/select_source.sql"
+			}
+		},
+		"folder": {
+			"name": "Michal"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-01T05:45:44Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

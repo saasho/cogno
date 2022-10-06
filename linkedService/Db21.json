@@ -1,0 +1,16 @@
+{
+	"name": "Db21",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Db2",
+		"typeProperties": {
+			"connectionString": "server=repnode2.iiszprodcedp.zc2.ibm.com:50000;database=XMETA;authenticationtype=Basic;username=repluser",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAMUQ2NTQ5RTAtNEI3RC00OUYxLTg3MzYtNjMwMEU1QUY5QjhEX2Y3YjE2NzcyLTc3MTItNGQwNy04MGVkLWY1YjQ3MzM0MjI4ZCINCn0="
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

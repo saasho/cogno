@@ -1,0 +1,236 @@
+{
+	"name": "DIM_SOURCE_APPLICATION",
+	"properties": {
+		"description": "SPU",
+		"folder": {
+			"name": "datamonkstestss"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SDMBASE_APPS",
+						"type": "DatasetReference"
+					},
+					"name": "sdmApp"
+				},
+				{
+					"dataset": {
+						"referenceName": "DIM_SOURCE_APPLICATION_IZ",
+						"type": "DatasetReference"
+					},
+					"name": "dimSourceApplication"
+				},
+				{
+					"dataset": {
+						"referenceName": "DIM_SOURCE_APPLICATION_IZ",
+						"type": "DatasetReference"
+					},
+					"name": "dimSourceApplicationSkey"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DIM_SOURCE_APPLICATION_IZ",
+						"type": "DatasetReference"
+					},
+					"name": "dimsourceapplicationsink"
+				},
+				{
+					"name": "maxSkeyCache"
+				}
+			],
+			"transformations": [
+				{
+					"name": "columnRenamed"
+				},
+				{
+					"name": "transformColumns"
+				},
+				{
+					"name": "addSurrogateKey"
+				},
+				{
+					"name": "addTimestamp"
+				},
+				{
+					"name": "applySchema"
+				},
+				{
+					"name": "setHashValue"
+				},
+				{
+					"name": "lookupNaturakKeys"
+				},
+				{
+					"name": "fetchMaxSkey"
+				},
+				{
+					"name": "ifExists"
+				},
+				{
+					"name": "processMaxSkey"
+				},
+				{
+					"name": "processDelta"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          APPLICATION_ID as integer,",
+				"          APPLICATION_CODE as string,",
+				"          APPLICATION_NAME as string,",
+				"          APPLICATION_SYSTEM_ID as integer,",
+				"          UPDATE_TS as timestamp,",
+				"          CREATE_TS as timestamp,",
+				"          ROW_STATUS_CD as string,",
+				"          APP_DEALFOLDER_ID as string,",
+				"          APP_DEALFOLDER_NM as string,",
+				"          CONFIG_STATUS_CD as string,",
+				"          CONFIG_STATUS_TS as timestamp,",
+				"          LOCKED_BY_USER_ID as string,",
+				"          CREATE_ID as string,",
+				"          UPDATE_ID as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> sdmApp",
+				"source(output(",
+				"          SURROGATE_KEY as long,",
+				"          SOURCE_APPLICATION_ID as integer,",
+				"          SOURCE_APPLICATION_CODE as string,",
+				"          SOURCE_APPLICATION_NAME as string,",
+				"          SOURCE_OWNER_NAME as string,",
+				"          EFFECTIVE_DATE as date,",
+				"          REVISION as integer,",
+				"          IS_DELETED as boolean,",
+				"          IS_LAD as boolean,",
+				"          LAD_SOURCE_OBJECT as string,",
+				"          LAD_SOURCE_OWNER as string,",
+				"          AUDIT_TIMESTAMP as timestamp,",
+				"          HASH_KEY as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> dimSourceApplication",
+				"source(output(",
+				"          SURROGATE_KEY as long,",
+				"          SOURCE_APPLICATION_ID as integer,",
+				"          SOURCE_APPLICATION_CODE as string,",
+				"          SOURCE_APPLICATION_NAME as string,",
+				"          SOURCE_OWNER_NAME as string,",
+				"          EFFECTIVE_DATE as date,",
+				"          REVISION as integer,",
+				"          IS_DELETED as boolean,",
+				"          IS_LAD as boolean,",
+				"          LAD_SOURCE_OBJECT as string,",
+				"          LAD_SOURCE_OWNER as string,",
+				"          AUDIT_TIMESTAMP as timestamp,",
+				"          HASH_KEY as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> dimSourceApplicationSkey",
+				"lookupNaturakKeys select(mapColumn(",
+				"          SOURCE_APPLICATION_ID = APPLICATION_ID,",
+				"          SOURCE_APPLICATION_CODE = APPLICATION_CODE,",
+				"          SOURCE_APPLICATION_NAME = APPLICATION_NAME,",
+				"          APPLICATION_SYSTEM_ID,",
+				"          UPDATE_TS,",
+				"          CREATE_TS,",
+				"          ROW_STATUS_CD,",
+				"          APP_DEALFOLDER_ID,",
+				"          APP_DEALFOLDER_NM,",
+				"          CONFIG_STATUS_CD,",
+				"          CONFIG_STATUS_TS,",
+				"          LOCKED_BY_USER_ID,",
+				"          CREATE_ID,",
+				"          UPDATE_ID,",
+				"          HASH_KEY = setHashValue@HASH_KEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> columnRenamed",
+				"columnRenamed derive(LAD_SOURCE_OBJECT = toString(null()),",
+				"          LAD_SOURCE_OWNER = toString(null()),",
+				"          SOURCE_OWNER_NAME = 'ods-db2',",
+				"          IS_DELETED = iif(ROW_STATUS_CD==='D', true(), false()),",
+				"          IS_LAD = false(),",
+				"          EFFECTIVE_DATE = coalesce(toDate(UPDATE_TS), toDate(CREATE_TS)),",
+				"          REVISION = 1) ~> transformColumns",
+				"transformColumns keyGenerate(output(SURROGATE_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> addSurrogateKey",
+				"processMaxSkey derive(AUDIT_TIMESTAMP = currentTimestamp()) ~> addTimestamp",
+				"addTimestamp select(mapColumn(",
+				"          SURROGATE_KEY,",
+				"          SOURCE_APPLICATION_ID,",
+				"          SOURCE_APPLICATION_CODE,",
+				"          SOURCE_APPLICATION_NAME,",
+				"          SOURCE_OWNER_NAME,",
+				"          EFFECTIVE_DATE,",
+				"          REVISION,",
+				"          IS_DELETED,",
+				"          IS_LAD,",
+				"          LAD_SOURCE_OBJECT,",
+				"          LAD_SOURCE_OWNER,",
+				"          AUDIT_TIMESTAMP,",
+				"          HASH_KEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> applySchema",
+				"sdmApp derive(HASH_KEY = sha2(256, toString(APPLICATION_ID)+toString(APPLICATION_CODE)+APPLICATION_NAME+toString(APPLICATION_SYSTEM_ID)+toString(UPDATE_TS)+toString(CREATE_TS)+ROW_STATUS_CD+APP_DEALFOLDER_ID+toString(APP_DEALFOLDER_NM)+toString(CONFIG_STATUS_CD) +toString(CONFIG_STATUS_TS)+LOCKED_BY_USER_ID+CREATE_ID+UPDATE_ID)) ~> setHashValue",
+				"processDelta, dimSourceApplication lookup(APPLICATION_ID == SOURCE_APPLICATION_ID,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupNaturakKeys",
+				"dimSourceApplicationSkey aggregate(maxSkey = max(toInteger(SURROGATE_KEY))) ~> fetchMaxSkey",
+				"fetchMaxSkey, dimSourceApplicationSkey exists(maxSkey == toInteger(null()),",
+				"     negate:true,",
+				"     broadcast: 'auto')~> ifExists",
+				"addSurrogateKey derive(SURROGATE_KEY = SURROGATE_KEY+toInteger(iifNull(maxSkeyCache#output().maxSkey, 0))) ~> processMaxSkey",
+				"setHashValue, dimSourceApplication exists(setHashValue@HASH_KEY == dimSourceApplication@HASH_KEY,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> processDelta",
+				"applySchema sink(allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     input(",
+				"          SURROGATE_KEY as long,",
+				"          SOURCE_APPLICATION_ID as integer,",
+				"          SOURCE_APPLICATION_CODE as string,",
+				"          SOURCE_APPLICATION_NAME as string,",
+				"          SOURCE_OWNER_NAME as string,",
+				"          EFFECTIVE_DATE as date,",
+				"          REVISION as integer,",
+				"          IS_DELETED as boolean,",
+				"          IS_LAD as boolean,",
+				"          LAD_SOURCE_OBJECT as string,",
+				"          LAD_SOURCE_OWNER as string,",
+				"          AUDIT_TIMESTAMP as timestamp,",
+				"          HASH_KEY as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     partitionFileNames:['data.snappy.parquet'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2,",
+				"     partitionBy('hash', 1)) ~> dimsourceapplicationsink",
+				"ifExists sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> maxSkeyCache"
+			]
+		}
+	}
+}

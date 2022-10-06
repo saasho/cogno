@@ -1,0 +1,18 @@
+{
+	"name": "AzureMLService1",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureMLService",
+		"typeProperties": {
+			"subscriptionId": "a802af10-3082-4ea6-b3db-542043a41e96",
+			"resourceGroupName": "rg-dpi30-test-eus-001",
+			"mlWorkspaceName": "dpi30-test-eus-ml-01",
+			"authentication": "MSI"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

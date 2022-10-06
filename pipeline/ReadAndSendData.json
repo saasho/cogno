@@ -1,0 +1,71 @@
+{
+	"name": "ReadAndSendData",
+	"properties": {
+		"activities": [
+			{
+				"name": "ReadAndSendData",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "ReadAndSendParameters",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"input": {
+							"value": "abcd",
+							"type": "string"
+						}
+					},
+					"snapshot": true,
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ReadAndSendData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "output",
+					"value": {
+						"value": "@activity('ReadAndSendData').output.status.Output.result.exitValue",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"output": {
+				"type": "String",
+				"defaultValue": "failed"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-06T09:08:44Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

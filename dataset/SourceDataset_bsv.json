@@ -1,0 +1,15 @@
+{
+	"name": "SourceDataset_bsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TkgenMonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"requestMethod": "GET"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

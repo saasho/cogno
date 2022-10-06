@@ -1,0 +1,87 @@
+{
+	"name": "table_extractor_func_with_condition",
+	"properties": {
+		"activities": [
+			{
+				"name": "table_extractor_func",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": "HttpTableExtractor",
+					"method": "POST",
+					"body": {
+						"value": "@json(concat('{\"action\": \"validate_sql\", \"github_url\": \"', pipeline().parameters.github_url,'\"}'))",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "table_extractor_func",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "check_SQL_validation",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "table_extractor_func",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(indexof(activity('table_extractor_func').output.Response, '\"sql_ready_for_execution\": true'), 0)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail_False",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "If condition is false",
+								"errorCode": "-1"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Fail_True",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "If condition is True",
+								"errorCode": "100"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"github_url": {
+				"type": "String",
+				"defaultValue": "https://github.kyndryl.net/ETL-CHAPTER/PROJECTS/blob/main/PZ_EAM_REPORTING_NC/OH1_EMEA/OH1_EMEA_IBM%20-%20IBM_BIGSQL_1.sql"
+			}
+		},
+		"folder": {
+			"name": "Michal"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-27T07:13:14Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

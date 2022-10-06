@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 9",
+	"properties": {
+		"content": {
+			"query": "SELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dpi30testeusdlsarz01.dfs.core.windows.net/rz-container/Asset-Management/MLDB_HW_INFO.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0'\n    ) AS [result]\n\n    SELECT TOP 100 *\n     FROM\nOPENROWSET( BULK 'https://dpi30testeusdlsarz01.dfs.core.windows.net/rz-container/Asset-Management/MLDB_HW_INFO.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0' ) AS nyc GROUP BY nyc.filename();",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dpi30testeusdsqlp01",
+				"poolName": "dpi30testeusdsqlp01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

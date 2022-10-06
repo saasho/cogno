@@ -1,0 +1,19 @@
+{
+	"name": "Azuretestblobstorage",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://dpi30testeusdlsatest02.blob.core.windows.net",
+			"tenant": "d1c719f7-cc48-4f9f-83ec-f706a2a940fe",
+			"servicePrincipalId": "ff031354-9bb6-43f7-9487-e62da4d3bbd6",
+			"accountKind": "StorageV2",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAMUQ2NTQ5RTAtNEI3RC00OUYxLTg3MzYtNjMwMEU1QUY5QjhEXzg2YzQ1MWE1LTQ3MTYtNDNhNS1iNWRkLTI0ZjhjNTJiM2FhMCINCn0="
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

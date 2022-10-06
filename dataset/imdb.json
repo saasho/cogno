@@ -1,0 +1,93 @@
+{
+	"name": "imdb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "imdb_top_1000.csv",
+				"folderPath": "Pricing/dj_test",
+				"fileSystem": "rz-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Poster_Link",
+				"type": "String"
+			},
+			{
+				"name": "Series_Title",
+				"type": "String"
+			},
+			{
+				"name": "Released_Year",
+				"type": "String"
+			},
+			{
+				"name": "Certificate",
+				"type": "String"
+			},
+			{
+				"name": "Runtime",
+				"type": "String"
+			},
+			{
+				"name": "Genre",
+				"type": "String"
+			},
+			{
+				"name": "IMDB_Rating",
+				"type": "String"
+			},
+			{
+				"name": "Overview",
+				"type": "String"
+			},
+			{
+				"name": "Meta_score",
+				"type": "String"
+			},
+			{
+				"name": "Director",
+				"type": "String"
+			},
+			{
+				"name": "Star1",
+				"type": "String"
+			},
+			{
+				"name": "Star2",
+				"type": "String"
+			},
+			{
+				"name": "Star3",
+				"type": "String"
+			},
+			{
+				"name": "Star4",
+				"type": "String"
+			},
+			{
+				"name": "No_of_Votes",
+				"type": "String"
+			},
+			{
+				"name": "Gross",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

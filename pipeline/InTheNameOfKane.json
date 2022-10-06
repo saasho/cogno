@@ -1,0 +1,44 @@
+{
+	"name": "InTheNameOfKane",
+	"properties": {
+		"activities": [
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "LOCATION",
+						"value": "/BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY.cs"
+					},
+					{
+						"name": "DATA_SOURCE",
+						"value": "bigsqltrails"
+					}
+				],
+				"linkedServiceName": {
+					"referenceName": "AdamDvorakDB",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(SELECT [name]  FROM sys.tables WHERE [name] = 'EXT_BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY')DROP EXTERNAL TABLE EXT_BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY;\nCREATE EXTERNAL TABLE EXT_BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY\n(\n\"ID\" BIGINT NOT NULL,\n\"NAME\" VARCHAR (64) NOT NULL,\n\"CODE\" VARCHAR (20) NOT NULL,\n\"UPLOAD\" DATE NOT NULL\n) \n\n WITH \n(\nLOCATION = '/BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY.csv',\nDATA_SOURCE = bigsqltrails,\nFILE_FORMAT = ETL8\n);\n\nIF OBJECT_ID(N'TRAILS_TRAILS.EAADMIN_ALLOCATION_METHODOLOGY', N'U') IS NOT NULL DROP TABLE TRAILS_TRAILS.EAADMIN_ALLOCATION_METHODOLOGY;\nCREATE TABLE TRAILS_TRAILS.EAADMIN_ALLOCATION_METHODOLOGY\nWITH \n(\nDISTRIBUTION = ROUND_ROBIN\n)\nAS\nSELECT * FROM EXT_BIGSQL_TRAILS_TRAILS_EAADMIN_ALLOCATION_METHODOLOGY;\nSELECT * FROM TRAILS_TRAILS.EAADMIN_ALLOCATION_METHODOLOGY;"
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-05-17T08:56:04Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

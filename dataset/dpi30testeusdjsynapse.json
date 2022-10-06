@@ -1,0 +1,23 @@
+{
+	"name": "dpi30testeusdjsynapse",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "user"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dpi30testeusdj"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

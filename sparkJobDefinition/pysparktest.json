@@ -1,0 +1,35 @@
+{
+	"name": "pysparktest",
+	"properties": {
+		"folder": {
+			"name": "kk"
+		},
+		"targetBigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"requiredSparkVersion": "3.1",
+		"language": "python",
+		"jobProperties": {
+			"name": "pysparktest",
+			"file": "abfss://dpi30testeusdlsafsrz01@dpi30testeusdlsarz01.dfs.core.windows.net/synapse/workspaces/dpi30-test-eus-syn-01/batchjobs/pysparktest/wordcount.py",
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "e53b9a2a-8cae-444b-96eb-4d9e0167b694"
+			},
+			"args": [
+				"abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/kk_test/shakespeare.txt"
+			],
+			"jars": [],
+			"pyFiles": [],
+			"files": [],
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2
+		}
+	}
+}

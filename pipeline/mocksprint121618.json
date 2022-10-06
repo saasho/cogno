@@ -1,0 +1,47 @@
+{
+	"name": "mocksprint121618",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "MockSprint121618",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filepath": "imdb_top_1000.csv",
+								"folder": "dj_test"
+							},
+							"sink1": {
+								"filepath": "test",
+								"parentfolder": "test"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "Pricing/MockSprint"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-10T09:11:19Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

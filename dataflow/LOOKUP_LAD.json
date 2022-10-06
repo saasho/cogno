@@ -1,0 +1,211 @@
+{
+	"name": "LOOKUP_LAD",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30idj_dimmodel_incomingsource",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30djdimension",
+						"type": "DatasetReference"
+					},
+					"name": "Dimension"
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30djdimension",
+						"type": "DatasetReference"
+					},
+					"name": "DimSkey"
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjLADFact",
+						"type": "DatasetReference"
+					},
+					"name": "Fact"
+				}
+			],
+			"sinks": [
+				{
+					"name": "maxSkeyCache"
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjLADFact",
+						"type": "DatasetReference"
+					},
+					"name": "FinalSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "dpi30djdimension_updated",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedDimSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "Result"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "nameSkey"
+				},
+				{
+					"name": "skeyTxamnt"
+				},
+				{
+					"name": "TransformedIncomingData"
+				},
+				{
+					"name": "union2"
+				},
+				{
+					"name": "ExistingData"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          NAME as string,",
+				"          TXAMNT as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/Pricing/dj_test/factandDim','Pricing/dj_test/factandDim/temp']) ~> source",
+				"source(output(",
+				"          SKEY as integer,",
+				"          NAME as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/Pricing/dj_test/factandDim/','Pricing/dj_test/factandDim/temp'],",
+				"     format: 'parquet') ~> Dimension",
+				"source(output(",
+				"          SKEY as integer,",
+				"          NAME as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> DimSkey",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/Pricing/dj_test/factandDim','Pricing/dj_test/factandDim/temp'],",
+				"     format: 'parquet') ~> Fact",
+				"source, Dimension lookup(source@NAME == Dimension@NAME,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 derive(match = isMatch()) ~> derivedColumn1",
+				"derivedColumn1 split(match,",
+				"     disjoint: false) ~> split1@(True, False)",
+				"split1@True select(mapColumn(",
+				"          TXAMNT,",
+				"          FKEY = SKEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Result",
+				"split1@False select(mapColumn(",
+				"          NAME = split1@False@NAME,",
+				"          TXAMNT,",
+				"          NAME = split1@False@NAME,",
+				"          match",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3 keyGenerate(output(TEMP_SKEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(SKEY = TEMP_SKEY+maxSkeyCache#outputs()[1].maxskey) ~> derivedColumn2",
+				"DimSkey aggregate(maxskey = max(SKEY)) ~> aggregate1",
+				"derivedColumn2 select(mapColumn(",
+				"          NAME,",
+				"          SKEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> nameSkey",
+				"derivedColumn2 select(mapColumn(",
+				"          TXAMNT,",
+				"          FKEY = SKEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> skeyTxamnt",
+				"skeyTxamnt, Result union(byName: true,",
+				"     partitionBy('hash', 1))~> TransformedIncomingData",
+				"nameSkey, Dimension union(byName: true,",
+				"     partitionBy('hash', 1))~> union2",
+				"TransformedIncomingData, Fact union(byName: true,",
+				"     partitionBy('hash', 1))~> ExistingData",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> maxSkeyCache",
+				"ExistingData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2,",
+				"     partitionBy('hash', 1)) ~> FinalSink",
+				"union2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          SKEY as integer,",
+				"          NAME as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 3,",
+				"     partitionBy('hash', 1)) ~> UpdatedDimSink"
+			]
+		}
+	}
+}

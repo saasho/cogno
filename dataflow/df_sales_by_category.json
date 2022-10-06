@@ -1,0 +1,64 @@
+{
+	"name": "df_sales_by_category",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "enrichedsuperstoredataset",
+						"type": "DatasetReference"
+					},
+					"name": "enrichedsuperdataset"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "curatedsupersetdataset",
+						"type": "DatasetReference"
+					},
+					"name": "curatesuperstoredataset"
+				}
+			],
+			"transformations": [
+				{
+					"name": "curatedsuperstoredataset"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Category as string,",
+				"          OrderID as string,",
+				"          OrderDate as string,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Region as string,",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Sales as string,",
+				"          Quantity as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> enrichedsuperdataset",
+				"enrichedsuperdataset aggregate(groupBy(Category),",
+				"     totalsales = sum(toInteger(Sales)),",
+				"     partitionBy('hash', 1)) ~> curatedsuperstoredataset",
+				"curatedsuperstoredataset sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Category as string,",
+				"          totalsales as string",
+				"     ),",
+				"     partitionFileNames:['sales_by_category.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> curatesuperstoredataset"
+			]
+		}
+	}
+}

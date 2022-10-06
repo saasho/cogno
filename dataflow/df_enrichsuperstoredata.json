@@ -1,0 +1,95 @@
+{
+	"name": "df_enrichsuperstoredata",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "rawsuperstoredataset",
+						"type": "DatasetReference"
+					},
+					"name": "rawsuprestoredataset"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "enrichedsuperstoredataset",
+						"type": "DatasetReference"
+					},
+					"name": "enrichedsuperstoredataset"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectedrawsuprestoredataset"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Category as string,",
+				"          RowID as string,",
+				"          OrderID as string,",
+				"          OrderDate as string,",
+				"          ShipDate as string,",
+				"          ShipMode as string,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Segment as string,",
+				"          Country as string,",
+				"          City as string,",
+				"          State as string,",
+				"          PostalCode as string,",
+				"          Region as string,",
+				"          ProductID as string,",
+				"          SubCategory as string,",
+				"          ProductName as string,",
+				"          Sales as string,",
+				"          Quantity as string,",
+				"          Discount as string,",
+				"          Profit as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawsuprestoredataset",
+				"rawsuprestoredataset select(mapColumn(",
+				"          Category,",
+				"          OrderID,",
+				"          OrderDate,",
+				"          CustomerID,",
+				"          CustomerName,",
+				"          Region,",
+				"          ProductID,",
+				"          ProductName,",
+				"          Sales,",
+				"          Quantity",
+				"     ),",
+				"     partitionBy('hash', 1),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectedrawsuprestoredataset",
+				"selectedrawsuprestoredataset sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Category as string,",
+				"          OrderID as string,",
+				"          OrderDate as string,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Region as string,",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Sales as string,",
+				"          Quantity as string",
+				"     ),",
+				"     partitionFileNames:['e_superstoredataset.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> enrichedsuperstoredataset"
+			]
+		}
+	}
+}

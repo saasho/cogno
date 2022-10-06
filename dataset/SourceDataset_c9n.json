@@ -1,0 +1,79 @@
+{
+	"name": "SourceDataset_c9n",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sdmbaseapps.snappy.parquet",
+				"folderPath": "Pricing/datamonks-test-ss/lz/ods-db2_SDMBASE_APPS",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "APPLICATION_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "APPLICATION_CODE",
+				"type": "UTF8"
+			},
+			{
+				"name": "APPLICATION_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "APPLICATION_SYSTEM_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "UPDATE_TS",
+				"type": "INT96"
+			},
+			{
+				"name": "CREATE_TS",
+				"type": "INT96"
+			},
+			{
+				"name": "ROW_STATUS_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "APP_DEALFOLDER_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "APP_DEALFOLDER_NM",
+				"type": "UTF8"
+			},
+			{
+				"name": "CONFIG_STATUS_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "CONFIG_STATUS_TS",
+				"type": "INT96"
+			},
+			{
+				"name": "LOCKED_BY_USER_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "CREATE_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "UPDATE_ID",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

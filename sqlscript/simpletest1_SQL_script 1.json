@@ -1,0 +1,17 @@
+{
+	"name": "simpletest1_SQL_script 1",
+	"properties": {
+		"content": {
+			"query": "insert into dbo.emp (FirstName, LastName) values ('bond','pang'); ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dpi30testeusdsqlp01",
+				"poolName": "dpi30testeusdsqlp01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

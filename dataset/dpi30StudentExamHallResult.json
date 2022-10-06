@@ -1,0 +1,23 @@
+{
+	"name": "dpi30StudentExamHallResult",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dpi30testeusdj/pipeline/StudentExamHall"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pricing/dj_test/Student",
+				"fileSystem": "rz-container"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,34 @@
+{
+	"name": "DependencyTest",
+	"properties": {
+		"folder": {
+			"name": "dpi30testdj"
+		},
+		"targetBigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"requiredSparkVersion": "3.1",
+		"language": "scala",
+		"jobProperties": {
+			"name": "DependencyTest",
+			"file": "abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/dj_test/jsontest_deploy.jar",
+			"className": "src.main.scala.com.kyndryl.cpa.landing.jsonparser.JsonParserTest",
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "4383f497-8bf2-49fc-9e1c-fafac469782d"
+			},
+			"args": [],
+			"jars": [],
+			"pyFiles": [],
+			"files": [],
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2
+		}
+	}
+}

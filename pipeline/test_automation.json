@@ -1,0 +1,362 @@
+{
+	"name": "test_automation",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "set thread_ts",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "test_file_src_dataset",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "test_src_rz",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "Test_file"
+						}
+					}
+				]
+			},
+			{
+				"name": "notify_slack_channel_start_of_pipeline",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://slack.com/api/chat.postMessage",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/json",
+						"Authorization": "Bearer xoxb-2264321203926-3098869694325-HS2ipUBnxZTZmBLrr0kd7oEQ"
+					},
+					"body": {
+						"value": "@json(\nconcat('{\n        \"channel\" : \"',\n        variables('channel'),\n        '\",\n        \"blocks\":[\n            {\n                \"type\" : \"section\",\n                \"text\" : {\n                    \"type\" : \"mrkdwn\",\n                    \"text\" : \":rocket: ',\n                    variables('notify_on_start'),\n                    ' Copying of Monthly Catalyst - Account View Actuals/Forecast data file from source to raw zone started.\"\n                }\n            }\n        ]\n}')\n)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "success_notify",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://slack.com/api/chat.postMessage",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/json",
+						"Authorization": "Bearer xoxb-2264321203926-3098869694325-HS2ipUBnxZTZmBLrr0kd7oEQ"
+					},
+					"body": {
+						"value": "@json(\nconcat('{\n        \"channel\" : \"',\n        variables('channel'),\n        '\",',\n        '\"thread_ts\" : \"',\n        variables('thread_ts'),\n        '\",',\n        '\"blocks\":[\n            {\n                \"type\" : \"section\",\n                \"text\" : {\n                    \"type\" : \"mrkdwn\",\n                    \"text\" : ',\n'\":green-circle-emoji: ',\nvariables('notify_on_pass'),\n' Copying of Account View Actuals/Forecast data file from source to raw zone done!',\n' Copying of Account View Actuals/Forecast data file from raw aone to enhanced zone started!\",\n              }\n            }\n        ]\n}'))\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "failure_notify",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://slack.com/api/chat.postMessage",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/json",
+						"Authorization": "Bearer xoxb-2264321203926-3098869694325-HS2ipUBnxZTZmBLrr0kd7oEQ"
+					},
+					"body": {
+						"value": "@json(\nconcat('{\n        \"channel\" : ',\n        variables('channel'),\n        '\",',\n        '\"thread_ts\" : \"',\n        variables('thread_ts'),\n        '\",',\n        '\"blocks\":[\n            {\n                \"type\" : \"section\",\n                \"text\" : {\n                    \"type\" : \"mrkdwn\",\n                    \"text\" : ',\n'\":red-circle-emoji: ',\nvariables('notify_on_fail'),\n' Copying of Accoount View Actuals/Forecast from source to raw zone has failed!\"\n}\n            }\n        ]\n}'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "set thread_ts",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "notify_slack_channel_start_of_pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "thread_ts",
+					"value": {
+						"value": "@activity('notify_slack_channel_start_of_pipeline').output.ts",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "success_notify",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "test_src_rz",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "Test_file"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "test_file_cz_dataset",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "success_notify_copy1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://slack.com/api/chat.postMessage",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/json",
+						"Authorization": "Bearer xoxb-2264321203926-3098869694325-HS2ipUBnxZTZmBLrr0kd7oEQ"
+					},
+					"body": {
+						"value": "@json(\nconcat('{\n        \"channel\" : \"',\n        variables('channel'),\n        '\",',\n        '\"thread_ts\" : \"',\n        variables('thread_ts'),\n        '\",',\n        '\"blocks\":[\n            {\n                \"type\" : \"section\",\n                \"text\" : {\n                    \"type\" : \"mrkdwn\",\n                    \"text\" : ',\n'\":green-circle-emoji: ',\nvariables('notify_on_pass'),\n' Copying of Account View Actuals/Forecast data file from raw zone to enhanced zone done!\",\n              }\n            }\n        ]\n}'))\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "failure_notify_copy1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data2",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://slack.com/api/chat.postMessage",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/json",
+						"Authorization": "Bearer xoxb-2264321203926-3098869694325-HS2ipUBnxZTZmBLrr0kd7oEQ"
+					},
+					"body": {
+						"value": "@json(\nconcat('{\n        \"channel\" : ',\n        variables('channel'),\n        '\",',\n        '\"thread_ts\" : \"',\n        variables('thread_ts'),\n        '\",',\n        '\"blocks\":[\n            {\n                \"type\" : \"section\",\n                \"text\" : {\n                    \"type\" : \"mrkdwn\",\n                    \"text\" : ',\n'\":red-circle-emoji: ',\nvariables('notify_on_fail'),\n' Copying of Accoount View Actuals/Forecast from raw zone to enhanced zone has failed!\"\n}\n            }\n        ]\n}'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"channel": {
+				"type": "String",
+				"defaultValue": "C03LH3RJNMQ"
+			},
+			"notify_on_start": {
+				"type": "String"
+			},
+			"thread_ts": {
+				"type": "String"
+			},
+			"notify_on_pass": {
+				"type": "String",
+				"defaultValue": "<@serdar.atadurdyyew>"
+			},
+			"notify_on_fail": {
+				"type": "String",
+				"defaultValue": "<@serdar.atadurdyyew>"
+			}
+		},
+		"folder": {
+			"name": "serdar"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-27T11:32:17Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,36 @@
+{
+	"name": "dpi30DedicatedSQLPoolDynamic",
+	"properties": {
+		"parameters": {
+			"Schema": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			},
+			"Table": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj/ParentChildPattern"
+		},
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().Table",
+				"type": "Expression"
+			}
+		},
+		"sqlPool": {
+			"referenceName": "dpi30testeusdsqlp01",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

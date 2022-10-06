@@ -1,0 +1,200 @@
+{
+	"name": "Requests",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/python"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "a7da45fb-672b-42c4-b7c5-74f4c3a6e86f"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"import requests"
+				],
+				"execution_count": 39
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"url = \"https://eci-staging.us-south.containers.appdomain.cloud/auth/authenticate\"\n",
+					"payload = \"8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae\" # Key here \n",
+					"headers = {'Content-Type': 'text/plain'}\n",
+					"response=requests.post(url=url,headers=headers,data=payload)\n",
+					"token = response.text\n",
+					"print(token)\n",
+					""
+				],
+				"execution_count": 40
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"url = \"https://eci-staging.us-south.containers.appdomain.cloud/api/v1/documents/61730a4e5037b730896bbd7a\"\n",
+					"payload = {}\n",
+					"headers = {\n",
+					"  'Accept': 'application/json',\n",
+					"  'Authorization': 'Bearer '+token \n",
+					"}\n",
+					"response = requests.get(url, headers=headers, data = payload)\n",
+					"data = response.json()[\"_source\"][\"metadata\"]\n",
+					"print(data)"
+				],
+				"execution_count": 41
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"\n",
+					"from pyspark.sql import *\n",
+					"df = spark.read.json(sc.parallelize([data]))\n",
+					"df.show(n=20, truncate=False, vertical=False)\n",
+					"# from pyspark.sql.types import *\n",
+					"# account_name = \"name of account\"\n",
+					"# container_name = \"name of container\"\n",
+					"# relative_path = \"name of file path\"    #abfss://<container_name>@<storage_account_name>.dfs.core.windows.net/<path>\n",
+					"# adls_path = 'abfss://%s@%s.dfs.core.windows.net/%s' % (container_name, account_name, relative_path)\n",
+					"# spark.conf.set('fs.%s@%s.dfs.core.windows.net/%s' % (container_name, account_name), \"account_key\") #not sure I'm doing the configuration right\n",
+					"# df.write.mode(\"overwrite\").json(adls_path)"
+				],
+				"execution_count": 44
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# import json"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# j = json.loads(raw_data)\n",
+					"# filteredData = j[\"_source\"][\"metadata\"]\n",
+					"# print(filteredData)\n",
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"mssparkutils.notebook.exit(json.dumps(data))"
+				]
+			}
+		]
+	}
+}

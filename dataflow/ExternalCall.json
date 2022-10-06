@@ -1,0 +1,80 @@
+{
+	"name": "ExternalCall",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30dj_paramter_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "externalCall1",
+					"linkedService": {
+						"referenceName": "AustraliaZones",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          AustraliaZones as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"derivedColumn1 call(mapColumn(",
+				"          AustraliaZones",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     output(",
+				"          headers as [string,string],",
+				"          status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     format: 'rest',",
+				"     store: 'restservice',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     httpMethod: 'GET',",
+				"     rowRelativeUrl: 'AustraliaZones',",
+				"     entity: 'http://worldtimeapi.org/api/timezone/',",
+				"     headerColumnName: 'headers',",
+				"     statusColumnName: 'status',",
+				"     addResponseCode: true,",
+				"     requestFormat: ['type' -> 'json'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> externalCall1",
+				"source1 derive(url = concat(\"http://worldtimeapi.org/api/timezone/\", AustraliaZones)) ~> derivedColumn1",
+				"externalCall1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

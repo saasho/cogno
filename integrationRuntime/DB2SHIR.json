@@ -1,0 +1,7 @@
+{
+	"name": "DB2SHIR",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "DB2 Self Hosted Integration Run Time"
+	}
+}

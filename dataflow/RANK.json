@@ -1,0 +1,83 @@
+{
+	"name": "RANK",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "imdb",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "rank1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as string,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 500,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"derivedColumn1 rank(asc(ImdbFloat, true),",
+				"     output(ImdbFloatRank as long),",
+				"     dense: true) ~> rank1",
+				"filter1 derive(ImdbFloat = toFloat(IMDB_Rating)) ~> derivedColumn1",
+				"source1 filter(!isNull(IMDB_Rating)) ~> filter1",
+				"rank1 aggregate(groupBy(ImdbFloat,",
+				"          ImdbFloatRank),",
+				"     Counts = count(ImdbFloat)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

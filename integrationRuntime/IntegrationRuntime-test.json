@@ -1,0 +1,7 @@
+{
+	"name": "IntegrationRuntime-test",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Delete"
+	}
+}

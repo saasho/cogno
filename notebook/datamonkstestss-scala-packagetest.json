@@ -1,0 +1,113 @@
+{
+	"name": "datamonkstestss-scala-packagetest",
+	"properties": {
+		"description": "testing import of 3rd party packages in synnapse",
+		"folder": {
+			"name": "datamonkstestss"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "5d70b26e-2c28-40a3-916d-54db8d57f667"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_spark",
+				"display_name": "scala"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Readme me - importing maven packages in azure synapse\n",
+					"\n",
+					"https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-manage-scala-packages\n",
+					"\n",
+					"1) Download the necessery jars from maven\n",
+					"2) Upload it to workspace - manage -> workspace package -> Upload\n",
+					"3) Add the uploaded package to spark pool - manage -> apache spark pool -> settings of inndividual spark pools -> packages -> refresh workspace section -> select package -> apply -> restart session."
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"\n",
+					"//import net.liftweb.json.JsonDSL._\n",
+					"import net.liftweb.json._\n",
+					"\n",
+					"\n",
+					"\n",
+					"implicit val formats = DefaultFormats\n",
+					"case class Mailserver(url: String, username: String, password: String)\n",
+					"\n",
+					"val json = parse(\n",
+					"\"\"\"\n",
+					"{ \n",
+					"\"url\": \"imap.yahoo.com\",\n",
+					"\"username\": \"myusername\",\n",
+					"\"password\": \"mypassword\"\n",
+					"}\n",
+					"\"\"\"\n",
+					")\n",
+					"\n",
+					"val m = json.extract[Mailserver]\n",
+					"println(m.url)\n",
+					"println(m.username)\n",
+					"println(m.password)\n",
+					"println(\"Success\")\n",
+					"\n",
+					""
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}

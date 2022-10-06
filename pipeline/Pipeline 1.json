@@ -1,0 +1,67 @@
+{
+	"name": "Pipeline 1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlSource",
+						"query": "select\n \tade.geo_nm, \n\tade.global_account_nm, \n\tade.market_name, \n\tade.client_unit_nm, \n\tade.sub_client_unit_nm, \n\tade.account_nm,\n\tcase when ade.account_code like ('%PFA_ACCN%') \n\t\tthen 'Yes'\n\t\telse 'No'\n\tend as \"Proforma Yes/No\",\n\tade.account_code, \n\tade.cpe, \n\tade.dpe, \n\tyear, \n\tquarter, \n\tmonth, \n\tade.managing_partner_nm, \n\tmp_flg,\n\tade.elemental_level_1,\n\tade.hi_level,\n\tade.category ,\n\tade.brand_short_nm,\n\tade.business_type,\n\tbutx.ww_focus_accounts as \"FA flag\",\n\tsum(revenue)as revenue, \n\tsum(cost)as cost, \n\tsum(gp)as gp\nfrom raw.actuals_details_export ade\nleft outer join ( \n\tselect account_code, ww_focus_accounts from catalyst.v_business_unit_taxonomy\n) butx on butx.account_code = ade.account_code \nwhere year >= 2021 and year <= 2024 and (ade.geo_nm = 'Iberia' or ade.geo_nm = 'Germany')\ngroup by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "to_delete",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "to_delete_2",
+						"type": "DatasetReference",
+						"parameters": {
+							"Filename": "latest_pull"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "serdar"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-27T11:32:21Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

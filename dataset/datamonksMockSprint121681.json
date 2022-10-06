@@ -1,0 +1,21 @@
+{
+	"name": "datamonksMockSprint121681",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pricing/MockSprint/121681",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

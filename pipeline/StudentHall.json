@@ -1,0 +1,37 @@
+{
+	"name": "StudentHall",
+	"properties": {
+		"activities": [
+			{
+				"name": "StudentExamHall",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dpi30StudentExamHallStudent",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-24T08:05:46Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,155 @@
+{
+	"name": "test_src_rz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawZone_DataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string",
+				"defaultValue": "Test_file"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(\n    dataset().FileName,\n    '_',\n    substring(utcNow(), 0,10),\n    '.csv'\n)",
+					"type": "Expression"
+				},
+				"folderPath": "rz",
+				"fileSystem": "catalyst-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "IOT_NAME",
+				"type": "String"
+			},
+			{
+				"name": "IMT_NAME",
+				"type": "String"
+			},
+			{
+				"name": "L3",
+				"type": "String"
+			},
+			{
+				"name": "L4",
+				"type": "String"
+			},
+			{
+				"name": "DSO_UNIT",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_NAME",
+				"type": "String"
+			},
+			{
+				"name": "IBM_COUNTRY_CD",
+				"type": "String"
+			},
+			{
+				"name": "TIMEZONE",
+				"type": "String"
+			},
+			{
+				"name": "KY10_PLUS_1_RANK",
+				"type": "String"
+			},
+			{
+				"name": "KY10_PLUS_1",
+				"type": "String"
+			},
+			{
+				"name": "KY10_PLUS_3",
+				"type": "String"
+			},
+			{
+				"name": "KY10_PLUS_1_PRESIDENTS",
+				"type": "String"
+			},
+			{
+				"name": "KY10_PLUS_3_PRESIDENTS",
+				"type": "String"
+			},
+			{
+				"name": "ENTERPRISE_NBR",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_NBR",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_NAME",
+				"type": "String"
+			},
+			{
+				"name": "OPEN_AR_AMT_MIO",
+				"type": "String"
+			},
+			{
+				"name": "OPEN_AR_ITEMS",
+				"type": "String"
+			},
+			{
+				"name": "OV30_ME",
+				"type": "String"
+			},
+			{
+				"name": "OV90_ME",
+				"type": "String"
+			},
+			{
+				"name": "DISPUTED_AMT",
+				"type": "String"
+			},
+			{
+				"name": "UACC",
+				"type": "String"
+			},
+			{
+				"name": "UACC_INJECTED",
+				"type": "String"
+			},
+			{
+				"name": "CURR_ME",
+				"type": "String"
+			},
+			{
+				"name": "IBM_RELATED",
+				"type": "String"
+			},
+			{
+				"name": "GLOBAL_BUYING_GROUP_ID",
+				"type": "String"
+			},
+			{
+				"name": "GLOBAL_BUYING_GROUP_NAME",
+				"type": "String"
+			},
+			{
+				"name": "MANAGING_PARTNER",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY_CD",
+				"type": "String"
+			},
+			{
+				"name": "DATE",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

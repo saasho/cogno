@@ -1,0 +1,16 @@
+{
+	"name": "datamonkswoc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datamonkstest_odsdb2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OdbcTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "SDM.CASE"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

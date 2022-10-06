@@ -1,0 +1,67 @@
+{
+	"name": "SynapsePresent",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "imdb",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     year as string",
+				"}",
+				"source(output(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as string,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 filter(Released_Year==$year) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

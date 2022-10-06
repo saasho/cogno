@@ -1,0 +1,107 @@
+{
+	"name": "ReadBlob",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/old"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "afc7671f-724e-4c77-abae-262e5372b45a"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"val acc_name = \"dpi30testeusdlsarz01\"\n",
+					"val container_name = \"rz-container\" //\n",
+					"val path = \"Pricing/dj_test/\"\n",
+					"val hol_blob_sas_token = \"sp=r&st=2022-05-13T11:39:15Z&se=2022-05-13T19:39:15Z&spr=https&sv=2020-08-04&sr=c&sig=6h5yyXORhdwjCXKoCSkewMPbgUaAbIjJDrnDwNK%2FYFk%3D\"\n",
+					"\n",
+					"val fullpath = f\"wasbs://$container_name@$acc_name.blob.core.windows.net/$path\"\n",
+					"spark.conf.set(f\"fs.azure.sas.$container_name.$acc_name.blob.core.windows.net\",hol_blob_sas_token)\n",
+					"// load the sample data as a Spark DataFrame\n",
+					"val df = spark.read.parquet(fullpath+\"userdata2.parquet\") \n",
+					"df.show(5, truncate = false)"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"sas token  = Azure Home > Storage Acc > Container > on the relavent container clikck on \"...\" > generate SAS Token"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.write.partionBy(\"gender\").parquet(fullpath,mode=\"overwrite\")"
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "DATA_TEST",
+	"properties": {
+		"content": {
+			"query": "",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "AdamDvorak",
+				"poolName": "AdamDvorak"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

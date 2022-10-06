@@ -1,0 +1,86 @@
+{
+	"name": "dpi30dj_121618_2_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pricing/MockSprint/121618_2",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Poster_Link",
+				"type": "UTF8"
+			},
+			{
+				"name": "Series_Title",
+				"type": "UTF8"
+			},
+			{
+				"name": "Released_Year",
+				"type": "UTF8"
+			},
+			{
+				"name": "Certificate",
+				"type": "UTF8"
+			},
+			{
+				"name": "Runtime",
+				"type": "UTF8"
+			},
+			{
+				"name": "Genre",
+				"type": "UTF8"
+			},
+			{
+				"name": "IMDB_Rating",
+				"type": "UTF8"
+			},
+			{
+				"name": "Overview",
+				"type": "UTF8"
+			},
+			{
+				"name": "Meta_score",
+				"type": "UTF8"
+			},
+			{
+				"name": "Director",
+				"type": "UTF8"
+			},
+			{
+				"name": "Star1",
+				"type": "UTF8"
+			},
+			{
+				"name": "Star2",
+				"type": "UTF8"
+			},
+			{
+				"name": "Star3",
+				"type": "UTF8"
+			},
+			{
+				"name": "Star4",
+				"type": "UTF8"
+			},
+			{
+				"name": "No_of_Votes",
+				"type": "UTF8"
+			},
+			{
+				"name": "Gross",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

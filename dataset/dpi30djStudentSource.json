@@ -1,0 +1,25 @@
+{
+	"name": "dpi30djStudentSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dpi30testeusdj/pipeline/StudentExamHall"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "part-00000-d1a06bbc-95af-447b-b604-f605df8b787a-c000.snappy.parquet",
+				"folderPath": "Pricing/dj_test/Student/students.parquet",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

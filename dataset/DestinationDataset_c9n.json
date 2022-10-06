@@ -1,0 +1,17 @@
+{
+	"name": "DestinationDataset_c9n",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SDMBASE_APPS"
+		},
+		"sqlPool": {
+			"referenceName": "dpi30testeusdsqlp01",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

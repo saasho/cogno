@@ -1,0 +1,103 @@
+{
+	"name": "selfjoin",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "imdb",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "GrossMillions"
+				},
+				{
+					"name": "Maxvotes"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as string,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(GrossMillions = toInteger(replace(Gross, \",\", \"\"))/1000000) ~> GrossMillions",
+				"GrossMillions aggregate(No_of_Votes_mx = max(toInteger(No_of_Votes))) ~> Maxvotes",
+				"GrossMillions, Maxvotes join(toInteger(No_of_Votes) == No_of_Votes_mx,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          Poster_Link,",
+				"          Series_Title,",
+				"          Released_Year,",
+				"          Certificate,",
+				"          Runtime,",
+				"          Genre,",
+				"          IMDB_Rating,",
+				"          Overview,",
+				"          Meta_score,",
+				"          Director,",
+				"          Star1,",
+				"          Star2,",
+				"          Star3,",
+				"          Star4,",
+				"          No_of_Votes,",
+				"          Gross,",
+				"          GrossMillions",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"name": "selectonly1column_flowlet",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/Flowlet"
+		},
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "input1"
+				},
+				{
+					"name": "output1"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          ExamHallNumber as integer",
+				"     ),",
+				"     order: 0) ~> input1",
+				"input1 filter(ExamHallNumber==1) ~> filter1",
+				"filter1 output() ~> output1"
+			]
+		}
+	}
+}

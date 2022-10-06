@@ -1,0 +1,123 @@
+{
+	"name": "SynapseDDLLaunchHyperwave",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "ETLChapterSPool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "3e74a95d-0abc-4524-8580-6af4302e4b05"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/ETLChapterSPool",
+				"name": "ETLChapterSPool",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ETLChapterSPool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"\r\n",
+					"import os,pyodbc\r\n",
+					"#from azure.storage.blob import BlockBlobService\r\n",
+					"from azure.storage.blob import BlobServiceClient, BlobClient\r\n",
+					"\r\n",
+					"connect_str = \"DefaultEndpointsProtocol=https;AccountName=dpi30testeusdlsacz03;AccountKey=noS/pxFw1WQ2aoBCORjXGGIO0XvSV5/58LBol+Xpcc+W++HXX9biF2fL2QShN2hVMrxyWAiUnw/s+AStxxKzZA==;EndpointSuffix=core.windows.net\"\r\n",
+					"storagename = \"dpi30testeusdlsacz03\"\r\n",
+					"container_name = \"bigsqltrails\"\r\n",
+					"blobname = \"DDL.sql\"\r\n",
+					"storagekey = \"noS/pxFw1WQ2aoBCORjXGGIO0XvSV5/58LBol+Xpcc+W++HXX9biF2fL2QShN2hVMrxyWAiUnw/s+AStxxKzZA==\"\r\n",
+					"\r\n",
+					"blob = BlobClient(account_url=\"https://\" + storagename + \".blob.core.windows.net\",\r\n",
+					"                  container_name=container_name,\r\n",
+					"                  blob_name=blobname,\r\n",
+					"                  credential=storagekey)\r\n",
+					"\r\n",
+					"dl = blob.download_blob()\r\n",
+					"sqlScriptFile = dl.content_as_text()\r\n",
+					"sqlScriptSplit = sqlScriptFile.split(';')\r\n",
+					"sqlScriptCount = len(sqlScriptSplit) - 2\r\n",
+					"\r\n",
+					"\r\n",
+					"server = 'dpi30-test-eus-syn-01.sql.azuresynapse.net'\r\n",
+					"database = 'AdamDvorak'\r\n",
+					"username = 'sqladmin'\r\n",
+					"password = '{AdamIsGoing2BeADaddy1111}'   \r\n",
+					"driver= '{ODBC Driver 17 for SQL Server}'\r\n",
+					"\r\n",
+					"with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:\r\n",
+					"     print (\"Connected!\\n\")\r\n",
+					"     cursor = conn.cursor() \r\n",
+					"     #cursor.execute(sqlScriptLine[1])\r\n",
+					"     #for sql in range(0,sqlScriptCount):\r\n",
+					"     for sql in range(0,1):\r\n",
+					"         print(\"EXECUTING\\n \" + sqlScriptSplit[sql]) \r\n",
+					"         cursor.execute(sqlScriptSplit[sql])\r\n",
+					"         print(\"Executed\")\r\n",
+					"            #with conn.cursor() as cur:\r\n",
+					"     \r\n",
+					"       #     print(script)\r\n",
+					"      \r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"  \r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					"\r\n",
+					""
+				],
+				"execution_count": 20
+			}
+		]
+	}
+}

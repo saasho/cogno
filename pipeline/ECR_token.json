@@ -1,0 +1,109 @@
+{
+	"name": "ECR_token",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://eci-staging.us-south.containers.appdomain.cloud/auth/authenticate",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-Type": "text/plain"
+					},
+					"body": {
+						"value": "@variables('apiKey')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "token",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GetToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "token",
+					"value": {
+						"value": "@activity('GetToken').output.Response",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Get 1 Document",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ECR_Pipeline_Read",
+						"type": "DataFlowReference",
+						"parameters": {
+							"token": "\"eyJhbGciOiJSUzI1NiJ9.eyJlbWFpbCI6ImNpb3ByY2FldEBvY2Vhbi5pYm0uY29tICIsImV4cCI6MTY2MDEyNjIwNywiaWF0IjoxNjYwMTIyNjA3LCJpc3MiOiJlY3ItYXV0aC1weSIsIm5hbWUiOiJDUFEiLCJzdWIiOiJBVlVBNVg3NDQifQ.LzIzQ7FF2PLj98_Rm8G19Hw9-_LbgEnEmCmNX27yQONhcd8mUUOACQuMJ26c_MAEoafjmsNjt525ivmWcoo8U3K1GI6fTbUvW3IVNBY2cto1ZxxW7tEJIRti8K0Lfcq0RIbf7bBlbJ-HCax-I1vPxLbxNaRvBIxxpKdj73nuRQGDi7cmvBNjHC0EEQ0xHxN04CINpcTT2dlf_XvPtdVGqgMQg7rud2lxcc7n7SRKbuBq9aokiKCLDtC86r5KbZ_pZ80Mx3VWDXwewORC3XW22MMpMcxxRfj6YzlgmfHayXQi6yr16MYDb6odxqK79Zn2b0vZnobe61GMYx6wdo5NPw\"\n",
+							"docId": "\"61730a4e5037b730896bbd7a\""
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"variables": {
+			"apiKey": {
+				"type": "String",
+				"defaultValue": "8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae"
+			},
+			"docID": {
+				"type": "String",
+				"defaultValue": "61730a4e5037b730896bbd7a"
+			},
+			"token": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj/ECR"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-08-10T09:19:04Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

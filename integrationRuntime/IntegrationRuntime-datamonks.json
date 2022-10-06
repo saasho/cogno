@@ -1,0 +1,6 @@
+{
+	"name": "IntegrationRuntime-datamonks",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

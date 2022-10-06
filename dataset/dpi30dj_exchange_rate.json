@@ -1,0 +1,13 @@
+{
+	"name": "dpi30dj_exchange_rate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30_exchangegerate",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

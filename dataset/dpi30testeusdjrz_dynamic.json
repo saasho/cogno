@@ -1,0 +1,38 @@
+{
+	"name": "dpi30testeusdjrz_dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			},
+			"Directory": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			}
+		},
+		"folder": {
+			"name": "dpi30testeusdj/ParentChildPattern"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(\n    '/'\n    ,dataset().Directory\n    ,'/'\n    ,dataset().FileName\n    ,'List_'\n    ,substring(utcNow(),0,10 )\n    ,'.parquet'\n)",
+					"type": "Expression"
+				},
+				"folderPath": "Pricing/dj_test",
+				"fileSystem": "rz-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

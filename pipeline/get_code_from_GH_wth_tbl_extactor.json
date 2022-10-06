@@ -1,0 +1,136 @@
+{
+	"name": "get_code_from_GH_wth_tbl_extactor",
+	"properties": {
+		"activities": [
+			{
+				"name": "VALIDATE_SQL",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [
+					{
+						"activity": "READ_FROM_GITHUB",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": "HttpTableExtractor",
+					"method": "POST",
+					"body": {
+						"value": "@json(concat('{\"action\": \"validate_sql\", \"sql\": \"', activity('READ_FROM_GITHUB').output.Response, '\"}'))",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "table_extractor_func",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "EXECUTE_SQL_OR_FAIL",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "VALIDATE_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@bool(activity('VALIDATE_SQL').output.sql_ready_for_execution)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "FAIL",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "SQL validation failed",
+								"errorCode": "-1"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "EXECUTE_SQL",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "AdamDvorakDB",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@activity('read_from_GitHub').output.Response",
+											"type": "Expression"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "READ_FROM_GITHUB",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.github_url",
+						"type": "Expression"
+					},
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "GET"
+				}
+			}
+		],
+		"parameters": {
+			"github_url": {
+				"type": "String",
+				"defaultValue": "https://raw.github.kyndryl.net/michal-sedlacek/synapse_testing/main/select_rule.sql?token=AAANUAGEJC7AOQSHSGPXDPTCTHFLG"
+			}
+		},
+		"folder": {
+			"name": "Michal"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-27T13:04:06Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

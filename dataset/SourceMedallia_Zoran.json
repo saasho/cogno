@@ -1,0 +1,318 @@
+{
+	"name": "SourceMedallia_Zoran",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dpi30-test-eus-syn-01-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "medllia_data.parquet",
+				"fileSystem": "medallia-data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "SRC_SYS_INTRCTN_KEY",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRC_TYPE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SERV_LINE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRVY_ELGBL_DT",
+				"type": "UTF8"
+			},
+			{
+				"name": "ACCT_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRVY_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "BUS_UNIT",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRVY_RESP_TS",
+				"type": "UTF8"
+			},
+			{
+				"name": "CTRY",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRVY_TYPE",
+				"type": "UTF8"
+			},
+			{
+				"name": "CTRY_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "SUB_BRAND",
+				"type": "UTF8"
+			},
+			{
+				"name": "MED_CUST_NUM",
+				"type": "UTF8"
+			},
+			{
+				"name": "URN_IDM_COMP",
+				"type": "UTF8"
+			},
+			{
+				"name": "CUST_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "URN_IDM_INDIV",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBL_BUY_GRP",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_10_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBL_BUY_GRP_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_10_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBS_SECTOR",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_15_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_10_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_15_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_10_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_17_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_17_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_17_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_17_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_20_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_20_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_20_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_20_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_30_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_30_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "UT_LVL_30_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBT_LVL_30_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBL_CLIENT_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "GBL_CLIENT_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "VAL_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "IBM_GBL_IMT_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "IBM_GBL_IMT_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "IBM_GBL_IOT_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "IBM_GBL_IOT_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORG_MKT_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORG_MKT_DSCR_FULL",
+				"type": "UTF8"
+			},
+			{
+				"name": "STRTGY_MKT_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "STRTGY_MKT_DSCR_FULL",
+				"type": "UTF8"
+			},
+			{
+				"name": "IND_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "IND_EXPERTS_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "INVTN_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "JOB_ROLE_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "JOB_TITLE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LTC_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LTR_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "PROD_CAT_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "OSAT_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "ADDTNL_CMMNT",
+				"type": "UTF8"
+			},
+			{
+				"name": "ADDTNL_ENGLISH_CMMNT",
+				"type": "UTF8"
+			},
+			{
+				"name": "PRTNRSP_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "MED_LANG_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "PID",
+				"type": "UTF8"
+			},
+			{
+				"name": "PID_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "PROJ_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "REAS_FOR_SCORE_CMMNT",
+				"type": "UTF8"
+			},
+			{
+				"name": "REAS_FOR_SCORE_ENGLISH_CMMNT",
+				"type": "UTF8"
+			},
+			{
+				"name": "RESPVNSS_SCORE",
+				"type": "UTF8"
+			},
+			{
+				"name": "RUN_DSCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SD_SECTOR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SCRTY_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "SRC_FILE_CREATE_DT",
+				"type": "UTF8"
+			},
+			{
+				"name": "DATA_SRC_CD",
+				"type": "UTF8"
+			},
+			{
+				"name": "CREATE_TS",
+				"type": "UTF8"
+			},
+			{
+				"name": "UPDT_TS",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

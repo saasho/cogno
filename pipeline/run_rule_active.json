@@ -1,0 +1,29 @@
+{
+	"name": "run_rule_active",
+	"properties": {
+		"activities": [
+			{
+				"name": "GitHub_SQL_validate_execute",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "GitHub_SQL_validate_execute",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"github_url": "https://github.kyndryl.net/ETL-CHAPTER/AZURE_SYNAPSE/blob/MS_test_queries_for_synapse/test_queries/recreate_table_rule_active.sql"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Michal"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-31T08:45:36Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

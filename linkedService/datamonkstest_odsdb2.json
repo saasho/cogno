@@ -1,0 +1,22 @@
+{
+	"name": "datamonkstest_odsdb2",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "ODS STG - 0236d4e1-0af6-4535-a27a-92ac2414e3c6.bv7c3o6d0vfhru3npds0.databases.appdomain.cloud",
+		"annotations": [],
+		"type": "Odbc",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": "**********"
+			},
+			"authenticationType": "Basic",
+			"userName": "sreepada",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlN2Q0ZWY2OC03NWIwLTQwM2UtYmY3My0yOGRjZDU1ODc3NjEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "DB2SHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

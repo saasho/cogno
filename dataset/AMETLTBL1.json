@@ -1,0 +1,13 @@
+{
+	"name": "AMETLTBL1",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"sqlPool": {
+			"referenceName": "dpi30testeusdsqlp01",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

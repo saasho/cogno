@@ -1,0 +1,98 @@
+{
+	"name": "CmdpToRawZone",
+	"properties": {
+		"activities": [
+			{
+				"name": "Pipeline1",
+				"description": "Using this to test the process of moving data from IBM to Azure\n",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AmazonS3CompatibleReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "*",
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['payload']['IORDNUM']"
+								},
+								"sink": {
+									"name": "IORDNUM",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CMDPSource",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CMDPSink",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Custom1",
+				"type": "Custom",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Tim"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-08-12T23:16:55Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

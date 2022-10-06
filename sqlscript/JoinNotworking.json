@@ -1,0 +1,20 @@
+{
+	"name": "JoinNotworking",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"content": {
+			"query": "-- This is auto-generated code\n\n-- create view examhall as \n-- (SELECT\n--     TOP 100 *\n-- FROM\n--     OPENROWSET(\n--         BULK 'https://dpi30testeusdlsarz01.blob.core.windows.net/rz-container/Pricing/dj_test/Student/examhall.csv/**',\n--         FORMAT = 'CSV',\n--         PARSER_VERSION = '2.0'\n--     ) AS [result1]\n--     )\n\n\n-- -- create view student as\n--  (\n--     SELECT\n--     TOP 100 *\n-- FROM\n--     OPENROWSET(\n--         BULK 'https://dpi30testeusdlsarz01.blob.core.windows.net/rz-container/Pricing/dj_test/Student/students.parquet/**',\n--         FORMAT = 'PARQUET'\n--     ) AS [result2]\n\n-- )\n\n-- select * from \n-- (SELECT\n--     TOP 100 *\n-- FROM\n--     OPENROWSET(\n--         BULK 'https://dpi30testeusdlsarz01.blob.core.windows.net/rz-container/Pricing/dj_test/Student/examhall.csv/**',\n--         FORMAT = 'CSV',\n--         PARSER_VERSION = '2.0'\n--     ) AS [e]\n--     )  ,  (\n--     SELECT\n--     TOP 100 *\n-- FROM\n--     OPENROWSET(\n--         BULK 'https://dpi30testeusdlsarz01.blob.core.windows.net/rz-container/Pricing/dj_test/Student/students.parquet/**',\n--         FORMAT = 'PARQUET'\n--     ) AS [s]\n\n-- )  where s.ExamHallNumber = e.HallNumber\n\n\n\n\n\n\nselect * from dbo.emp;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dpi30testeusdsqlp01",
+				"poolName": "dpi30testeusdsqlp01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

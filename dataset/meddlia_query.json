@@ -1,0 +1,321 @@
+{
+	"name": "meddlia_query",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawZone_DataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "medllia_table.csv",
+				"fileSystem": "medallia-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\"",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SRC_SYS_INTRCTN_KEY",
+				"type": "String"
+			},
+			{
+				"name": "SRC_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "SERV_LINE",
+				"type": "String"
+			},
+			{
+				"name": "SRVY_ELGBL_DT",
+				"type": "String"
+			},
+			{
+				"name": "ACCT_NAME",
+				"type": "String"
+			},
+			{
+				"name": "SRVY_ID",
+				"type": "String"
+			},
+			{
+				"name": "BUS_UNIT",
+				"type": "String"
+			},
+			{
+				"name": "SRVY_RESP_TS",
+				"type": "String"
+			},
+			{
+				"name": "CTRY",
+				"type": "String"
+			},
+			{
+				"name": "SRVY_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "CTRY_NAME",
+				"type": "String"
+			},
+			{
+				"name": "SUB_BRAND",
+				"type": "String"
+			},
+			{
+				"name": "MED_CUST_NUM",
+				"type": "String"
+			},
+			{
+				"name": "URN_IDM_COMP",
+				"type": "String"
+			},
+			{
+				"name": "CUST_NAME",
+				"type": "String"
+			},
+			{
+				"name": "URN_IDM_INDIV",
+				"type": "String"
+			},
+			{
+				"name": "GBL_BUY_GRP",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_10_CD",
+				"type": "String"
+			},
+			{
+				"name": "GBL_BUY_GRP_NAME",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_10_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBS_SECTOR",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_15_CD",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_10_CD",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_15_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_10_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_17_CD",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_17_CD",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_17_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_17_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_20_CD",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_20_CD",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_20_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_20_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_30_CD",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_30_CD",
+				"type": "String"
+			},
+			{
+				"name": "UT_LVL_30_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBT_LVL_30_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "GBL_CLIENT_ID",
+				"type": "String"
+			},
+			{
+				"name": "GBL_CLIENT_NAME",
+				"type": "String"
+			},
+			{
+				"name": "VAL_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "IBM_GBL_IMT_CD",
+				"type": "String"
+			},
+			{
+				"name": "IBM_GBL_IMT_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "IBM_GBL_IOT_CD",
+				"type": "String"
+			},
+			{
+				"name": "IBM_GBL_IOT_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "ORG_MKT_CD",
+				"type": "String"
+			},
+			{
+				"name": "ORG_MKT_DSCR_FULL",
+				"type": "String"
+			},
+			{
+				"name": "STRTGY_MKT_CD",
+				"type": "String"
+			},
+			{
+				"name": "STRTGY_MKT_DSCR_FULL",
+				"type": "String"
+			},
+			{
+				"name": "IND_NAME",
+				"type": "String"
+			},
+			{
+				"name": "IND_EXPERTS_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "INVTN_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "JOB_ROLE_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "JOB_TITLE",
+				"type": "String"
+			},
+			{
+				"name": "LTC_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "LTR_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "PROD_CAT_CD",
+				"type": "String"
+			},
+			{
+				"name": "OSAT_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "ADDTNL_CMMNT",
+				"type": "String"
+			},
+			{
+				"name": "ADDTNL_ENGLISH_CMMNT",
+				"type": "String"
+			},
+			{
+				"name": "PRTNRSP_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "MED_LANG_CD",
+				"type": "String"
+			},
+			{
+				"name": "PID",
+				"type": "String"
+			},
+			{
+				"name": "PID_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "PROJ_NAME",
+				"type": "String"
+			},
+			{
+				"name": "REAS_FOR_SCORE_CMMNT",
+				"type": "String"
+			},
+			{
+				"name": "REAS_FOR_SCORE_ENGLISH_CMMNT",
+				"type": "String"
+			},
+			{
+				"name": "RESPVNSS_SCORE",
+				"type": "String"
+			},
+			{
+				"name": "RUN_DSCR",
+				"type": "String"
+			},
+			{
+				"name": "SD_SECTOR",
+				"type": "String"
+			},
+			{
+				"name": "SCRTY_ID",
+				"type": "String"
+			},
+			{
+				"name": "SRC_FILE_CREATE_DT",
+				"type": "String"
+			},
+			{
+				"name": "DATA_SRC_CD",
+				"type": "String"
+			},
+			{
+				"name": "CREATE_TS",
+				"type": "String"
+			},
+			{
+				"name": "UPDT_TS",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

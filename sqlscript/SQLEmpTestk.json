@@ -1,0 +1,17 @@
+{
+	"name": "SQLEmpTestk",
+	"properties": {
+		"content": {
+			"query": "SELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dpi30testeusdlsarz01.dfs.core.windows.net/rz-container/Pricing/kk_test/Employee.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        firstrow = 3\n    ) AS [result]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

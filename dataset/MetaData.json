@@ -1,0 +1,20 @@
+{
+	"name": "MetaData",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dpi30testeusdj"
+		},
+		"sqlPool": {
+			"referenceName": "dpi30testeusdsqlp01",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

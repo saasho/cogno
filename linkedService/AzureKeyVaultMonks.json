@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVaultMonks",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://dpi30-test-eus-kv-01.vault.azure.net/"
+		}
+	}
+}

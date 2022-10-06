@@ -1,0 +1,88 @@
+{
+	"name": "git-pull",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "cf6300d7-6912-4836-bcc1-45025f951421"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/testspark",
+				"name": "testspark",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"outputs_hidden": false
+					}
+				},
+				"source": [
+					"import git\n",
+					"import os\n",
+					"\n",
+					"# my_repo = git.Repo.clone_from('https://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@github.kyndryl.net/srjayant/Azure-environment.git', 'with-ssh-key-repo2')\n",
+					"\n",
+					"# if my_repo.is_dirty(untracked_files=True):\n",
+					"#     print('Changes detected.')\n",
+					"\n",
+					"\n",
+					"directory = os.getcwd()\n",
+					"print(os.listdir('with-ssh-key-repo2'))\n",
+					"\n",
+					"g = git.cmd.Git('with-ssh-key-repo2')\n",
+					"g.pull()\n",
+					"\n",
+					"print(os.listdir('with-ssh-key-repo2'))"
+				],
+				"execution_count": 22
+			}
+		]
+	}
+}

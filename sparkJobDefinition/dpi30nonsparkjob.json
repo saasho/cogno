@@ -1,0 +1,34 @@
+{
+	"name": "dpi30nonsparkjob",
+	"properties": {
+		"folder": {
+			"name": "dpi30testdj"
+		},
+		"targetBigDataPool": {
+			"referenceName": "testspark",
+			"type": "BigDataPoolReference"
+		},
+		"requiredSparkVersion": "3.1",
+		"language": "scala",
+		"jobProperties": {
+			"name": "dpi30nonsparkjob",
+			"file": "abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/dj_test/NonSparktest.jar",
+			"className": "src.main.scala.com.kyndryl.test.Test",
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "bd2a2032-5bbb-4813-b48f-7a2d989b1bd4"
+			},
+			"args": [],
+			"jars": [],
+			"pyFiles": [],
+			"files": [],
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2
+		}
+	}
+}

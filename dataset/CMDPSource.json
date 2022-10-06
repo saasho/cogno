@@ -1,0 +1,168 @@
+{
+	"name": "CMDPSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AmazonS3Compatible1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AmazonS3CompatibleLocation",
+				"bucketName": "events-kakfa-string",
+				"folderPath": "ews-prod-delayed-MARKETO_REGISTRATIONS1"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"schema": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"fields": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string"
+									},
+									"optional": {
+										"type": "boolean"
+									},
+									"field": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"optional": {
+							"type": "boolean"
+						},
+						"name": {
+							"type": "string"
+						}
+					}
+				},
+				"payload": {
+					"type": "object",
+					"properties": {
+						"IORDNUM": {
+							"type": "string"
+						},
+						"FIRSTNAME": {
+							"type": "string"
+						},
+						"LASTNAME": {
+							"type": "string"
+						},
+						"COMPANY": {
+							"type": "string"
+						},
+						"ADDRESS": {
+							"type": "string"
+						},
+						"CITY": {
+							"type": "string"
+						},
+						"STATE": {
+							"type": "string"
+						},
+						"POSTALCODE": {
+							"type": "string"
+						},
+						"COUNTRY": {
+							"type": "string"
+						},
+						"PHONE": {
+							"type": "string"
+						},
+						"EMAIL": {
+							"type": "string"
+						},
+						"SALUTATION": {
+							"type": "string"
+						},
+						"TITLE": {
+							"type": "string"
+						},
+						"EVENT_ID": {
+							"type": "string"
+						},
+						"CAMPAIGNCODE": {
+							"type": "string"
+						},
+						"CAMPAIGNNAME": {
+							"type": "string"
+						},
+						"EVENTSUBTYPE": {
+							"type": "string"
+						},
+						"DATASOURCE_TRANSACTION_TIME": {
+							"type": "integer"
+						},
+						"LEADROUTING": {
+							"type": "string"
+						},
+						"LEADFOCUS": {
+							"type": "string"
+						},
+						"ALLIANCEPARTNER": {
+							"type": "string"
+						},
+						"REGISTRATIONTYPE": {
+							"type": "string"
+						},
+						"EMAILCONTACTPERMISSION": {
+							"type": "string"
+						},
+						"TELEPHONECONTACTPERMISSION": {
+							"type": "string"
+						},
+						"INTERACTION_TYPE": {
+							"type": "string"
+						},
+						"EVENTNAME": {
+							"type": "string"
+						},
+						"EVENTSTARTDATE": {
+							"type": "integer"
+						},
+						"EVENTENDDATE": {
+							"type": "integer"
+						},
+						"EVENTONDEMANDDATE": {
+							"type": "integer"
+						},
+						"UT10": {
+							"type": "string"
+						},
+						"UT10NAME": {
+							"type": "string"
+						},
+						"UT15": {
+							"type": "string"
+						},
+						"UT15NAME": {
+							"type": "string"
+						},
+						"UT17": {
+							"type": "string"
+						},
+						"UT17NAME": {
+							"type": "string"
+						},
+						"TRANSACTIONTIME": {
+							"type": "integer"
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,21 @@
+{
+	"name": "monksdb2woc",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Odbc",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": "**********"
+			},
+			"authenticationType": "Basic",
+			"userName": "cioprcact_ocean_ibm_com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4NmZhMDJjYi1mMzg2LTQ0MTItYjhlNS04NWEzZjgxZDg0ZjIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "DB2SHIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"name": "ECR_Auth_flowlet",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj/ECR"
+		},
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "RestServiceMonksTestss",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "output1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     jwtToken as string (\"8ks7b2wDRB6wvZxGbXvuBMELtqMrMZEmmJpnZ29YQKhae\")",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     format: 'rest',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     entity: 'auth/authenticate',",
+				"     headers: ['Content-Type' -> 'text/plain'],",
+				"     httpMethod: 'POST',",
+				"     body: ($jwtToken)) ~> source1",
+				"source1 derive(body = toString(byName('body'))) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          body",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 output() ~> output1"
+			]
+		}
+	}
+}

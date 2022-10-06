@@ -1,0 +1,89 @@
+{
+	"name": "CopyMultiCSVToSQLTable",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowCopyCommand": true
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "RawZone_DataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "rz-container/Pricing/kk_test/Emp2TKSourcefiles"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EmpId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EmpId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "EmpName\r",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EmpName",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedText62k",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSynapseAnalyticsTablek",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "emp2ktest"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-06-23T20:06:49Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

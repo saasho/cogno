@@ -1,0 +1,46 @@
+{
+	"name": "ScriptActivitykk",
+	"properties": {
+		"activities": [
+			{
+				"name": "ScriptActivityTest",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "name",
+									"type": "String",
+									"value": "John",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "Select @name as EmpName\nSelect 1000 as EmpSalary\nselect 10 as EmpId\nprint 'Execution completed'"
+						}
+					],
+					"logSettings": {
+						"logDestination": "ActivityOutput"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-05-24T06:01:39Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

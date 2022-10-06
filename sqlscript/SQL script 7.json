@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 7",
+	"properties": {
+		"content": {
+			"query": "CREATE USER Sreepada.Jayanthi@kyndryl.onmicrosoft.com\n\tWITHOUT LOGIN\n\tWITH DEFAULT_SCHEMA = dbo;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dpi30testeusdsqlp01",
+				"poolName": "dpi30testeusdsqlp01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

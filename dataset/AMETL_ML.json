@@ -1,0 +1,13 @@
+{
+	"name": "AMETL_ML",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Db22",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Db2Table",
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

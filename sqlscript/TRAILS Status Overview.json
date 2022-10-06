@@ -1,0 +1,20 @@
+{
+	"name": "TRAILS Status Overview",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"content": {
+			"query": "SELECT count(1), eis.status AS isw_status , sw.status AS sw_status, swl.status AS swl_status, hwl.status AS hwl_status, LEVEL,\n\nhw.status AS hw_status, cus.status AS cus_status, CUS.SW_LICENSE_MGMT AS CUS_SW_LICENSE_MGMT\n\nFROM TRAILS_TRAILS.EAADMIN_INSTALLED_SOFTWARE eis\n\nJOIN trails_trails.EAADMIN_SOFTWARE sw ON eis.software_id=sw.SOFTWARE_ID --AND LEVEL = 'LICENSABLE'\nJOIN trails_trails.EAADMIN_SOFTWARE_LPAR swl ON eis.software_lpar_id=swl.id\nJOIN TRAILS_TRAILS.EAADMIN_HW_SW_COMPOSITE HWSWC ON (SWL.ID = HWSWC.SOFTWARE_LPAR_ID)\nJOIN TRAILS_TRAILS.EAADMIN_HARDWARE_LPAR HWL     ON (HWL.ID = HWSWC.HARDWARE_LPAR_ID)\nJOIN TRAILS_TRAILS.EAADMIN_HARDWARE HW           ON (HW.ID = HWL.HARDWARE_ID)   \nJOIN TRAILS_TRAILS.EAADMIN_CUSTOMER_NEW CUS \t      ON (SWL.CUSTOMER_ID = CUS.CUSTOMER_ID) -- AND CUS.STATUS = 'ACTIVE' AND CUS.SW_LICENSE_MGMT = 'YES')\n\n\n--JOIN TRAILS_TRAILS.EAADMIN_CUSTOMER CUS \t      ON (SWL.CUSTOMER_ID = CUS.CUSTOMER_ID  AND CUS.STATUS = 'ACTIVE' AND CUS.SW_LICENSE_MGMT = 'YES')\n--JOIN TRAILS_TRAILS.EAADMIN_MANUFACTURER SWM      ON (SWC.MANUFACTURER_ID = SWM.ID)\n--JOIN TRAILS_TRAILS.EAADMIN_MACHINE_TYPE MT       ON (MT.ID = HW.MACHINE_TYPE_ID)\n\n GROUP BY eis.status, LEVEL , swl.status,sw.status, hwl.status, hw.status , cus.status , CUS.SW_LICENSE_MGMT\n \nORDER by eis.status, swl.status,sw.status, hwl.status, hw.status, LEVEL , cus.status , CUS.SW_LICENSE_MGMT",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "AdamDvorak",
+				"poolName": "AdamDvorak"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

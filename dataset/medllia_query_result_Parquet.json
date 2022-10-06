@@ -1,0 +1,21 @@
+{
+	"name": "medllia_query_result_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawZone_DataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "medllia_data.parquet",
+				"fileSystem": "medallia-data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

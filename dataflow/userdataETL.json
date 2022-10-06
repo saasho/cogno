@@ -1,0 +1,86 @@
+{
+	"name": "userdataETL",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjuserdata",
+						"type": "DatasetReference"
+					},
+					"name": "ReadSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjtargetparq",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RenameColumn"
+				},
+				{
+					"name": "ReplaceNull"
+				},
+				{
+					"name": "surrogateKey"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          registration_dttm as timestamp,",
+				"          id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          gender as string,",
+				"          ip_address as string,",
+				"          cc as string,",
+				"          country as string,",
+				"          birthdate as string,",
+				"          salary as double,",
+				"          title as string,",
+				"          comments as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> ReadSource",
+				"ReadSource select(mapColumn(",
+				"          FIRSTNAME = first_name,",
+				"          LASTNAME = last_name,",
+				"          EMAIL = email,",
+				"          GENDER = gender,",
+				"          BIRTHDATE = birthdate,",
+				"          SALARY = salary,",
+				"          TITLE = title",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RenameColumn",
+				"RenameColumn derive(GENDER = iif((GENDER)=='', 'NA', GENDER),",
+				"          TITLE = iif((TITLE)=='', 'NA', TITLE),",
+				"          SALARY = iifNull(SALARY, 0, SALARY)) ~> ReplaceNull",
+				"ReplaceNull keyGenerate(output(SURROGATEKEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey",
+				"surrogateKey sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

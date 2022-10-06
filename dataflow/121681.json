@@ -1,0 +1,72 @@
+{
+	"name": "121681",
+	"properties": {
+		"folder": {
+			"name": "PricingMockSprint"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "mockAdoImdbCSV",
+						"type": "DatasetReference"
+					},
+					"name": "mockAdoImdbCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "datamonksMockSprint121681",
+						"type": "DatasetReference"
+					},
+					"name": "mockImdbGrossINR"
+				}
+			],
+			"transformations": [
+				{
+					"name": "addGrossINR"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     USDINR as double (77.00)",
+				"}",
+				"source(output(",
+				"          Poster_Link as string,",
+				"          Series_Title as string,",
+				"          Released_Year as string,",
+				"          Certificate as string,",
+				"          Runtime as string,",
+				"          Genre as string,",
+				"          IMDB_Rating as string,",
+				"          Overview as string,",
+				"          Meta_score as string,",
+				"          Director as string,",
+				"          Star1 as string,",
+				"          Star2 as string,",
+				"          Star3 as string,",
+				"          Star4 as string,",
+				"          No_of_Votes as string,",
+				"          Gross as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> mockAdoImdbCSV",
+				"mockAdoImdbCSV derive(GrossINR = toDouble(regexReplace(Gross, ',', ''))*$USDINR) ~> addGrossINR",
+				"addGrossINR sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     partitionFileNames:['data.snappy.parquet'],",
+				"     truncate: true,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> mockImdbGrossINR"
+			]
+		}
+	}
+}

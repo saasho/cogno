@@ -1,0 +1,17 @@
+{
+	"name": "datamonkstestss_sdmbaseapps",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [APPLICATION_ID]\n,[APPLICATION_CODE]\n,[APPLICATION_NAME]\n,[APPLICATION_SYSTEM_ID]\n,[UPDATE_TS]\n,[CREATE_TS]\n,[ROW_STATUS_CD]\n,[APP_DEALFOLDER_ID]\n,[APP_DEALFOLDER_NM]\n,[CONFIG_STATUS_CD]\n,[CONFIG_STATUS_TS]\n,[LOCKED_BY_USER_ID]\n,[CREATE_ID]\n,[UPDATE_ID]\n FROM [dbo].[SDMBASE_APPS]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dpi30testeusdsqlp01",
+				"poolName": "dpi30testeusdsqlp01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

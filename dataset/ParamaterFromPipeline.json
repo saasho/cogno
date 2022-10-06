@@ -1,0 +1,30 @@
+{
+	"name": "ParamaterFromPipeline",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDatamonksTest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"source_paramater": {
+				"type": "string",
+				"defaultValue": "pipeline().parameters.pipelineparameter"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "source_parameter",
+				"folderPath": "Pricing/dj_test",
+				"fileSystem": "rz-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

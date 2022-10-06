@@ -1,0 +1,16 @@
+{
+	"name": "ILMT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AMETLAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "https://158.87.52.49:9081/api/sam/about?token=245b2cb500d3fd8d9673f27b5787c830786f3bf5"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

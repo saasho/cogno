@@ -1,0 +1,29 @@
+{
+	"name": "run_source",
+	"properties": {
+		"activities": [
+			{
+				"name": "GitHub_SQL_validate_execute",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "GitHub_SQL_validate_execute",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"github_url": "https://github.kyndryl.net/ETL-CHAPTER/AZURE_SYNAPSE/blob/MS_test_queries_for_synapse/test_queries/select_source.sql"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Michal"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-31T09:16:53Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

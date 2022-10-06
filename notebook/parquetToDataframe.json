@@ -1,0 +1,377 @@
+{
+	"name": "parquetToDataframe",
+	"properties": {
+		"folder": {
+			"name": "datamonkstestss"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "ETLChapterSPool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "daafaaa7-e27c-458e-b006-d9b77cde53f9"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"3cd25c3f-bc12-48a5-a35b-87597805f844": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "1",
+										"1": "4",
+										"2": "SDMPRICE",
+										"3": "SDM Pricing                                                             ",
+										"4": "ods-db2",
+										"5": "2021-05-25",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "2",
+										"1": "7",
+										"2": "NSDMADDE",
+										"3": "SDM Addendum                                                            ",
+										"4": "ods-db2",
+										"5": "2021-05-25",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "3",
+										"1": "8",
+										"2": "NSDMGPE",
+										"3": "SDM GPE                                                                 ",
+										"4": "ods-db2",
+										"5": "2021-05-25",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "4",
+										"1": "27",
+										"2": "ISSP",
+										"3": "ISSP                                                                    ",
+										"4": "ods-db2",
+										"5": "2021-05-25",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "5",
+										"1": "29",
+										"2": "NSDMPRI",
+										"3": "ISSPP                                                                   ",
+										"4": "ods-db2",
+										"5": "2021-05-25",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "6",
+										"1": "1",
+										"2": "NSDMSOCO",
+										"3": "SDM SO Costing                                                          ",
+										"4": "ods-db2",
+										"5": "2021-05-27",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "7",
+										"1": "2",
+										"2": "SDMCOTAR",
+										"3": "SDM Cost Target V2                                                      ",
+										"4": "ods-db2",
+										"5": "2021-05-27",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "8",
+										"1": "3",
+										"2": "SDMPDEAL",
+										"3": "SDM Prior Deals                                                         ",
+										"4": "ods-db2",
+										"5": "2021-05-27",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "9",
+										"1": "5",
+										"2": "SDMMBPS",
+										"3": "SDM MBPS                                                                ",
+										"4": "ods-db2",
+										"5": "2021-05-27",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									},
+									{
+										"0": "10",
+										"1": "6",
+										"2": "SDMSOLST",
+										"3": "Solution Strategy                                                       ",
+										"4": "ods-db2",
+										"5": "2021-05-27",
+										"6": "1",
+										"7": "false",
+										"8": "false",
+										"11": "2022-05-26 17:59:42.925",
+										"12": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "SURROGATE_KEY",
+										"type": "bigint"
+									},
+									{
+										"key": "1",
+										"name": "SOURCE_APPLICATION_ID",
+										"type": "int"
+									},
+									{
+										"key": "2",
+										"name": "SOURCE_APPLICATION_CODE",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "SOURCE_APPLICATION_NAME",
+										"type": "string"
+									},
+									{
+										"key": "4",
+										"name": "SOURCE_OWNER_NAME",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "EFFECTIVE_DATE",
+										"type": "date"
+									},
+									{
+										"key": "6",
+										"name": "REVISION",
+										"type": "int"
+									},
+									{
+										"key": "7",
+										"name": "IS_DELETED",
+										"type": "boolean"
+									},
+									{
+										"key": "8",
+										"name": "IS_LAD",
+										"type": "boolean"
+									},
+									{
+										"key": "9",
+										"name": "LAD_SOURCE_OBJECT",
+										"type": "string"
+									},
+									{
+										"key": "10",
+										"name": "LAD_SOURCE_OWNER",
+										"type": "string"
+									},
+									{
+										"key": "11",
+										"name": "AUDIT_TIMESTAMP",
+										"type": "timestamp"
+									},
+									{
+										"key": "12",
+										"name": "HASH_KEY",
+										"type": "string"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "sum",
+									"categoryFieldKeys": [
+										"1"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/a802af10-3082-4ea6-b3db-542043a41e96/resourceGroups/rg-dpi30-test-eus-001/providers/Microsoft.Synapse/workspaces/dpi30-test-eus-syn-01/bigDataPools/ETLChapterSPool",
+				"name": "ETLChapterSPool",
+				"type": "Spark",
+				"endpoint": "https://dpi30-test-eus-syn-01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ETLChapterSPool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/datamonks-test-ss/iz/DIM_SOURCE_APPLICATION/data.snappy.parquet', format='parquet')\r\n",
+					""
+				],
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"sourceDf = spark.read.load('abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/datamonks-test-ss/lz/ods-db2_SDMBASE_APPS/sdmbaseapps.snappy.parquet', format='parquet')\n",
+					""
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"newDf = spark.createDataFrame([[100, 'x', 'y', 101, '2021-05-25', '2021-05-25', 'I', 'a', 'b', 'Active', '2021-05-25', 'None', 'c', 'd']], sourceDf.columns)\n",
+					"sourceDf.union(newDf).write.mode(saveMode=\"overwrite\").parquet('abfss://rz-container@dpi30testeusdlsarz01.dfs.core.windows.net/Pricing/datamonks-test-ss/lz/ods-db2_SDMBASE_APPS/sdmbaseappsNew.snappy.parquet')\n",
+					""
+				],
+				"execution_count": 28
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			}
+		]
+	}
+}

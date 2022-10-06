@@ -1,0 +1,20 @@
+{
+	"name": "AllFiles",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"content": {
+			"query": "SELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dpi30testeusdlsarz01.blob.core.windows.net/rz-container/Pricing/dj_test/*',\n        FORMAT = 'PARQUET'\n    ) AS [result]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

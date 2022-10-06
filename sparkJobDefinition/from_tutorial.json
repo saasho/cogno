@@ -1,0 +1,37 @@
+{
+	"name": "from_tutorial",
+	"properties": {
+		"description": "https://docs.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-job-definitions",
+		"folder": {
+			"name": "michal"
+		},
+		"targetBigDataPool": {
+			"referenceName": "ETLChapterSPool",
+			"type": "BigDataPoolReference"
+		},
+		"requiredSparkVersion": "3.1",
+		"language": "python",
+		"jobProperties": {
+			"name": "from_tutorial",
+			"file": "abfss://dpi30testeusdlsacz03@dpi30testeusdlsacz03.dfs.core.windows.net/michal/wordcount.py",
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "1",
+				"spark.autotune.trackingId": "0cf57a79-980d-4db7-b11f-02f0b352a3f4"
+			},
+			"args": [],
+			"jars": [],
+			"pyFiles": [
+				"abfss://dpi30testeusdlsacz03@dpi30testeusdlsacz03.dfs.core.windows.net/michal/shakespeare.py",
+				"abfss://dpi30testeusdlsacz03@dpi30testeusdlsacz03.dfs.core.windows.net/michal/result.py"
+			],
+			"files": [],
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 1
+		}
+	}
+}

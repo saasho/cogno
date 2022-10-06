@@ -1,0 +1,137 @@
+{
+	"name": "DataFlow_ak",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SDMBASE_APPS",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SDMBASE_APPS",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ResultLookup",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          APPLICATION_ID as integer,",
+				"          APPLICATION_CODE as string,",
+				"          APPLICATION_NAME as string,",
+				"          APPLICATION_SYSTEM_ID as integer,",
+				"          UPDATE_TS as timestamp,",
+				"          CREATE_TS as timestamp,",
+				"          ROW_STATUS_CD as string,",
+				"          APP_DEALFOLDER_ID as string,",
+				"          APP_DEALFOLDER_NM as string,",
+				"          CONFIG_STATUS_CD as string,",
+				"          CONFIG_STATUS_TS as timestamp,",
+				"          LOCKED_BY_USER_ID as string,",
+				"          CREATE_ID as string,",
+				"          UPDATE_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source1",
+				"source(output(",
+				"          APPLICATION_ID as integer,",
+				"          APPLICATION_CODE as string,",
+				"          APPLICATION_NAME as string,",
+				"          APPLICATION_SYSTEM_ID as integer,",
+				"          UPDATE_TS as timestamp,",
+				"          CREATE_TS as timestamp,",
+				"          ROW_STATUS_CD as string,",
+				"          APP_DEALFOLDER_ID as string,",
+				"          APP_DEALFOLDER_NM as string,",
+				"          CONFIG_STATUS_CD as string,",
+				"          CONFIG_STATUS_TS as timestamp,",
+				"          LOCKED_BY_USER_ID as string,",
+				"          CREATE_ID as string,",
+				"          UPDATE_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source2",
+				"source1 select(mapColumn(",
+				"          APPLICATION_ID,",
+				"          APPLICATION_CODE,",
+				"          APPLICATION_NAME,",
+				"          APPLICATION_SYSTEM_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, select2 lookup(select1@APPLICATION_ID == select2@APPLICATION_ID",
+				"     && select1@APPLICATION_CODE == select2@APPLICATION_CODE,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> lookup1",
+				"source2 select(mapColumn(",
+				"          APPLICATION_ID,",
+				"          APPLICATION_CODE,",
+				"          ROW_STATUS_CD",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select1, select2 join(select1@APPLICATION_CODE == select2@APPLICATION_CODE",
+				"     && select1@APPLICATION_ID == select2@APPLICATION_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sort(asc(select1@APPLICATION_CODE, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Column_1 as string,",
+				"          Column_2 as string,",
+				"          Column_3 as string,",
+				"          Column_4 as string,",
+				"          Column_5 as string,",
+				"          Column_6 as string,",
+				"          Column_7 as string,",
+				"          Column_8 as string,",
+				"          Column_9 as string,",
+				"          Column_10 as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,68 @@
+{
+	"name": "Stringyfy",
+	"properties": {
+		"folder": {
+			"name": "dpi30testeusdj"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dpi30dj_parameterisedjson",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dpi30testeusdjrz_dynamic",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "stringify1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "parse1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          hits as (hits as ({_id} as string, {_index} as string, {_score} as boolean, {_source} as (access_scope as (groups as string[], required_matches as boolean), cnum as string, cnum_update as string, created_at as string, deleted as boolean, email as string, email_update as string, file as (extension as string, mime_type as string, name as string, sha256 as string, size as integer), metadata as (artifact_reference as string, category as string, cmr_bg as string, cmr_dc as string, cmr_dom_client_desc as string, cmr_duns as integer, cmr_enterprise_number as integer, cmr_gbg as string, cmr_gc as string, cmr_glob_client_desc as string, cmr_mpp_number as integer, cmr_number as integer, cmr_pv as integer, country_name as string, customer_contract_reference_number as string, customer_name as string, customer_sensitive as boolean, customer_type as string, dclm_number as string, end_date as string, iso_country_code as string, landed_country_code as string, landed_country_name as string, language_code as string, language_name as string, lead_business_unit as string, lead_business_unit_code as string, parent_contract_reference as string, parent_type as string, registration_number as string, relationship_agreement_applicability as string, source as string, source_system as string, start_date as date, status as string, title as string, type_code as string, type_name as string), storage as (data_worker as string, key as string), updated_at as string), {_type} as string)[], max_score as boolean, total as short)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source1 stringify(childjson = hits.hits.{_source}.metadata ? string,",
+				"     format: 'json') ~> stringify1",
+				"stringify1 select(mapColumn(",
+				"          childjson",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 parse(newcol = childjson ? (type_name as string),",
+				"     format: 'json',",
+				"     documentForm: 'singleDocument') ~> parse1",
+				"parse1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

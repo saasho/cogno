@@ -1,0 +1,84 @@
+{
+	"name": "ECR",
+	"properties": {
+		"folder": {
+			"name": "datamonkstestss"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "RestServiceMonksTestss",
+						"type": "LinkedServiceReference"
+					},
+					"name": "EcrJwtToken"
+				},
+				{
+					"linkedService": {
+						"referenceName": "RestServiceMonksTestss",
+						"type": "LinkedServiceReference"
+					},
+					"name": "EcrGetSingleDoc"
+				}
+			],
+			"sinks": [
+				{
+					"name": "jwtTokenCache"
+				}
+			],
+			"transformations": [
+				{
+					"name": "MapDrifted1",
+					"description": "Creates an explicit mapping for each drifted column"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     jwtToken as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     format: 'rest',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     entity: 'auth/authenticate',",
+				"     headers: ['Content-Type' -> 'text/plain'],",
+				"     httpMethod: 'POST',",
+				"     body: ($jwtToken),",
+				"     paginationRules: ['supportRFC5988' -> 'true']) ~> EcrJwtToken",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     format: 'rest',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     entity: 'api/v1/documents/61730a4e5037b730896bbd7a',",
+				"     headers: ['Accept' -> 'application/json', 'Authorization' -> ('Bearer '+toString(jwtTokenCache#outputs()[1].body))],",
+				"     httpMethod: 'GET',",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> EcrGetSingleDoc",
+				"EcrJwtToken derive(body = toString(byName('body'))) ~> MapDrifted1",
+				"MapDrifted1 select(mapColumn(",
+				"          body",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          body",
+				"     )) ~> jwtTokenCache"
+			]
+		}
+	}
+}

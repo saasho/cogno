@@ -1,0 +1,6 @@
+{
+	"name": "MD360IntegrationRuntimeTest",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
